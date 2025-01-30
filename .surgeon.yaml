@@ -1,0 +1,2 @@
+upstream: https://github.com/community-scripts/ProxmoxVE
+modsdir: .mods

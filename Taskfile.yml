@@ -1,0 +1,16 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  build:
+    cmds:
+      - go build -o surgeon .
+    silent: true
+  install:
+    cmds:
+      - go install .
+    silent: true
