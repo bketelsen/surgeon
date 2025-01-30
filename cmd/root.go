@@ -32,17 +32,26 @@ import (
 var cfgFile string
 var upstream string
 var modsdir string
+var stage bool
+var commit bool
+var push bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "surgeon",
 	Short: "Surgical forks of upstream repositories",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Long: `Surgeon is a tool to make surgical changes to forks of upstream repositories.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+The surgeon command reads a configuration file in the current directory
+named '.surgeon.yaml'.  This file contains the configuration for the
+surgeon command.  The configuration file contains the upstream repository
+URL, the directory containing the code modification files, and a list of
+code modifications to apply to the forked repository.
+
+The surgeon command will clone the upstream repository into a temporary directory,
+then apply the code modifications to the cloned repository.  The contents of the
+modified repository are copied to the current directory, overwriting any existing
+files.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
@@ -78,6 +87,12 @@ func init() {
 	viper.BindPFlag("upstream", rootCmd.PersistentFlags().Lookup("upstream"))
 	rootCmd.PersistentFlags().StringVar(&modsdir, "modsdir", "", "directory containing code modification files")
 	viper.BindPFlag("modsdir", rootCmd.PersistentFlags().Lookup("modsdir"))
+	rootCmd.PersistentFlags().BoolVar(&stage, "stage", false, "stage changes in git")
+	viper.BindPFlag("stage", rootCmd.PersistentFlags().Lookup("stage"))
+	rootCmd.PersistentFlags().BoolVar(&commit, "commit", false, "commit changes in git")
+	viper.BindPFlag("commit", rootCmd.PersistentFlags().Lookup("commit"))
+	rootCmd.PersistentFlags().BoolVar(&push, "push", false, "push changes to remote git repository")
+	viper.BindPFlag("push", rootCmd.PersistentFlags().Lookup("push"))
 
 }
 

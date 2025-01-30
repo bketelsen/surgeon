@@ -32,17 +32,23 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Create a new surgical fork",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Initialize a new surgical fork",
+	Long: `The init command will create a new '.surgeon.yaml'
+file in the current directory.	This file will contain
+the configuration for the surgeon command.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Example configuration file:
+
+	upstream: https://github.com/community-scripts/ProxmoxVE
+	modsdir: mymods
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		config := Config{
-			Upstream: "https://some.repository",
+			Upstream: "https://some.repository.com/upstream/repo",
 			ModsDir:  "mymods",
+			Stage:    true,
+			Commit:   true,
+			Push:     false,
 			CodeMods: []CodeMod{
 				{
 					Description: "Modify URLS",

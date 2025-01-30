@@ -63,6 +63,7 @@ func (p *Patient) Operate() error {
 		if err != nil {
 			return fmt.Errorf("applying code mod: %w", err)
 		}
+
 	}
 
 	// get the changed files in the upstream repository
@@ -81,6 +82,48 @@ func (p *Patient) Operate() error {
 		err = copyFile(s, p.UpsreamRoot, p.ForkRoot)
 	}
 
+	var clean bool
+	// if the user wants to stage the changes, do so
+	if p.Config.Stage {
+		fmt.Println("Staging changes")
+		w, err := p.forkRepo.Worktree()
+		if err != nil {
+			return fmt.Errorf("getting git worktree: %w", err)
+		}
+		status, err := w.Status()
+		if err != nil {
+			return fmt.Errorf("getting worktree status: %w", err)
+		}
+		if status.IsClean() {
+			fmt.Println("No changes to stage")
+			clean = true
+
+		} else {
+			for s := range status {
+				fmt.Println(s)
+				_, err = w.Add(s)
+				if err != nil {
+					return fmt.Errorf("staging file in git: %w", err)
+				}
+			}
+		}
+		// if the user wants to commit the changes, do so
+		if p.Config.Commit && !clean {
+			fmt.Println("Committing changes")
+			_, err = w.Commit("chore: Surgeon changes", &git.CommitOptions{})
+			if err != nil {
+				return fmt.Errorf("committing changes: %w", err)
+			}
+			// if the user wants to push the changes, do so
+			if p.Config.Push {
+				fmt.Println("Pushing changes")
+				err = p.forkRepo.Push(&git.PushOptions{})
+				if err != nil {
+					return fmt.Errorf("pushing changes: %w", err)
+				}
+			}
+		}
+	}
 	// clean up the temporary directory
 	defer os.RemoveAll(p.UpsreamRoot)
 

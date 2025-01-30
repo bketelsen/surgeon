@@ -25,6 +25,9 @@ import "github.com/spf13/viper"
 
 type Config struct {
 	Upstream string
+	Stage    bool
+	Commit   bool
+	Push     bool
 	ModsDir  string    `mapstructure:"modsdir"`
 	CodeMods []CodeMod `mapstructure:"codemods"`
 }
