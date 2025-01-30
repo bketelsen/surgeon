@@ -1,13 +1,11 @@
-# TODO
+# Surgeon
+Modify your fork of an upstream repository with surgical precision.
 
-## Sketch
+See [IncusScripts](https://github.com/bketelsen/IncusScripts) which uses `surgeon`
+to modify [community-scripts for Proxmox](https://github.com/community-scripts/ProxmoxVE)
+to run on Incus.
 
-``` bash
-cd myfork
-surgeon
-```
-
-Config
+# Config
 
 ``` yaml
 upstream: https://github.com/community-scripts/ProxmoxVE
