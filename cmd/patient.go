@@ -80,6 +80,9 @@ func (p *Patient) Operate() error {
 		fmt.Println(s)
 		// copy the file from the upstream repository to the fork
 		err = copyFile(s, p.UpsreamRoot, p.ForkRoot)
+		if err != nil {
+			return fmt.Errorf("copying file: %w", err)
+		}
 	}
 
 	var clean bool
@@ -114,14 +117,14 @@ func (p *Patient) Operate() error {
 			if err != nil {
 				return fmt.Errorf("committing changes: %w", err)
 			}
-			// if the user wants to push the changes, do so
-			if p.Config.Push {
-				fmt.Println("Pushing changes")
-				err = p.forkRepo.Push(&git.PushOptions{})
-				if err != nil {
-					return fmt.Errorf("pushing changes: %w", err)
-				}
-			}
+			// // if the user wants to push the changes, do so
+			// if p.Config.Push {
+			// 	fmt.Println("Pushing changes")
+			// 	err = p.forkRepo.Push(&git.PushOptions{})
+			// 	if err != nil {
+			// 		return fmt.Errorf("pushing changes: %w", err)
+			// 	}
+			// }
 		}
 	}
 	// clean up the temporary directory
