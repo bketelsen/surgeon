@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/bketelsen/surgeon/codemods"
 	"github.com/go-git/go-git/v5"
@@ -64,6 +65,24 @@ func (p *Patient) Operate() error {
 			return fmt.Errorf("applying code mod: %w", err)
 		}
 
+	}
+
+	missing, err := compareDirs(p.UpsreamRoot, p.ForkRoot)
+	if err != nil {
+		return fmt.Errorf("comparing directories: %w", err)
+	}
+	if len(missing) > 0 {
+		fmt.Println("The following files are missing from the fork")
+		for _, m := range missing {
+			if !strings.HasPrefix(m, ".git") {
+				fmt.Println(m)
+				err = copyFile(m, p.UpsreamRoot, p.ForkRoot)
+				if err != nil {
+					return fmt.Errorf("copying file: %w", err)
+				}
+			}
+		}
+		return nil
 	}
 
 	// get the changed files in the upstream repository
@@ -219,4 +238,38 @@ func copyFile(path, source, target string) error {
 	}
 	return nil
 
+}
+
+// compareDirs returns a list of files that are missing from the target directory
+// compared to the source directory
+func compareDirs(source, target string) ([]string, error) {
+	var missing []string
+	err := filepath.Walk(source, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		rel, err := filepath.Rel(source, path)
+		if err != nil {
+			return err
+		}
+		targetPath := filepath.Join(target, rel)
+		_, err = os.Stat(targetPath)
+		if err != nil {
+			if os.IsNotExist(err) {
+				fi, err := os.Stat(path)
+				if err != nil {
+					return err
+				}
+				if !fi.IsDir() {
+					missing = append(missing, rel)
+				}
+
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return missing, nil
 }
