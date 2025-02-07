@@ -54,7 +54,7 @@ func (s Inject) Usage() string {
 	return `Inject contents into a file.
 This codemod modifies the matched file(s) by injecting specified content.
 
-Args (3 required):
+Args (2 required):
 	1. Injection point in the file. Valid: "start", "end", line number
 	2. The content to inject
 
