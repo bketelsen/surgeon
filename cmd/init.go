@@ -49,6 +49,11 @@ Example configuration file:
 			Stage:    true,
 			Commit:   true,
 			Push:     false,
+			IgnoreList: []Ignore{
+				{
+					Prefix: "ct",
+				},
+			},
 			CodeMods: []CodeMod{
 				{
 					Description: "Modify URLS",

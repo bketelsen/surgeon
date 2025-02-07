@@ -76,9 +76,11 @@ func (p *Patient) Operate() error {
 		for _, m := range missing {
 			if !strings.HasPrefix(m, ".git") {
 				fmt.Println(m)
-				err = copyFile(m, p.UpsreamRoot, p.ForkRoot)
-				if err != nil {
-					return fmt.Errorf("copying file: %w", err)
+				if !p.IsIgnored(m) {
+					err = copyFile(m, p.UpsreamRoot, p.ForkRoot)
+					if err != nil {
+						return fmt.Errorf("copying file: %w", err)
+					}
 				}
 			}
 		}
@@ -98,9 +100,11 @@ func (p *Patient) Operate() error {
 	for s := range status {
 		fmt.Println(s)
 		// copy the file from the upstream repository to the fork
-		err = copyFile(s, p.UpsreamRoot, p.ForkRoot)
-		if err != nil {
-			return fmt.Errorf("copying file: %w", err)
+		if !p.IsIgnored(s) {
+			err = copyFile(s, p.UpsreamRoot, p.ForkRoot)
+			if err != nil {
+				return fmt.Errorf("copying file: %w", err)
+			}
 		}
 	}
 
@@ -272,4 +276,14 @@ func compareDirs(source, target string) ([]string, error) {
 		return nil, err
 	}
 	return missing, nil
+}
+
+func (p *Patient) IsIgnored(path string) bool {
+	for _, i := range p.Config.IgnoreList {
+		if strings.HasPrefix(path, i.Prefix) {
+			fmt.Println("Ignoring", path)
+			return true
+		}
+	}
+	return false
 }

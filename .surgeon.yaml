@@ -1,2 +1,14 @@
-upstream: https://github.com/community-scripts/ProxmoxVE
-modsdir: .mods
+upstream: https://some.repository.com/upstream/repo
+stage: true
+commit: true
+push: false
+modsdir: mymods
+codemods:
+- description: Modify URLS
+  mod: sed
+  match: cmd/*.go
+  args:
+  - github.com/upstream/repo
+  - github.com/myfork/repo
+ignorelist:
+- prefix: ct/

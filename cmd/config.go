@@ -24,12 +24,17 @@ package cmd
 import "github.com/spf13/viper"
 
 type Config struct {
-	Upstream string
-	Stage    bool
-	Commit   bool
-	Push     bool
-	ModsDir  string    `mapstructure:"modsdir"`
-	CodeMods []CodeMod `mapstructure:"codemods"`
+	Upstream   string
+	Stage      bool
+	Commit     bool
+	Push       bool
+	ModsDir    string    `mapstructure:"modsdir"`
+	CodeMods   []CodeMod `mapstructure:"codemods"`
+	IgnoreList []Ignore  `mapstructure:"ignore"`
+}
+
+type Ignore struct {
+	Prefix string
 }
 
 type CodeMod struct {
