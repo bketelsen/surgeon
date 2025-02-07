@@ -1,104 +1,76 @@
 # Surgeon
+
 Modify your fork of an upstream repository with surgical precision.
 
 See [IncusScripts](https://github.com/bketelsen/IncusScripts) which uses `surgeon`
 to modify [community-scripts for Proxmox](https://github.com/community-scripts/ProxmoxVE)
 to run on Incus.
 
-# Config
+---
+
+## 🚀 Project Overview
+
+**surgeon** Modify your fork of an upstream repository with surgical precision.
+
+See [IncusScripts](https://github.com/bketelsen/IncusScripts) which uses `surgeon`
+to modify [community-scripts for Proxmox](https://github.com/community-scripts/ProxmoxVE)
+to run on Incus.
+
+---
+
+## 🚀 Known Issues
+
+**git push/commit/stage** the git commit/push/stage settings don't work correctly. Don't use them yet.
+
+---
+
+## 🚀 Installation / Usage
+
+Clone and build the repository with Go
+
+---
+
+## Config
 
 ``` yaml
-upstream: https://github.com/community-scripts/ProxmoxVE
-modsdir: codemods
+upstream: https://some.repository.com/upstream/repo
+stage: true
+commit: true
+push: false
+modsdir: mymods
 codemods:
-- description: Modify Build Func
+- description: Modify URLS
   mod: sed
-  match: ct/*.sh
+  match: cmd/*.go
   args:
-  - https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/build.func
-  - https://raw.githubusercontent.com/bketelsen/IncusScripts/main/misc/build.func
-- description: Modify Build Func Refs
-  mod: sed
-  match: ct/*.sh
-  args:
-  - https://raw.githubusercontent.com/community-scripts/ProxmoxVE/refs/heads/main/misc/build.func
-  - https://raw.githubusercontent.com/bketelsen/IncusScripts/refs/heads/main/misc/build.func
-- description: Whiptail ct
-  mod: sed
-  match: ct/*.sh
-  args:
-  - Proxmox VE Helper Scripts
-  - Incus Scripts
-- description: Whiptail install
-  mod: sed
-  match: install/*.sh
-  args:
-  - Proxmox VE Helper Scripts
-  - Incus Scripts
-- description: Whiptail misc sh
-  mod: sed
-  match: misc/*.sh
-  args:
-  - Proxmox VE Helper Scripts
-  - Incus Scripts
-- description: Whiptail misc func
-  mod: sed
-  match: misc/*.func
-  args:
-  - Proxmox VE Helper Scripts
-  - Incus Scripts
-- description: Whiptail func LXC
-  mod: sed
-  match: misc/*.func
-  args:
-  - LXC Container
-  - Incus Container
-- description: Whiptail func Updater
-  mod: sed
-  match: misc/*.func
-  args:
-  - https://github.com/community-scripts/ProxmoxVE/raw/main/ct/${app}.sh
-  - https://github.com/bketelsen/IncusScripts/raw/main/ct/${app}.sh
-- description: Header Updates
-  mod: sed
-  match: misc/*.func
-  args:
-  - https://github.com/community-scripts/ProxmoxVE/raw/main/ct/headers/
-  - https://github.com/bketelsen/IncusScripts/raw/main/ct/headers/
-- description: PVE Check Function
-  mod: bashfunc
-  match: misc/build.func
-  args:
-  - pve_check
-  - codemods/pve_check.sh
-- description: PVE Start Function
-  mod: bashfunc
-  match: misc/build.func
-  args:
-  - start
-  - codemods/start.sh
-- description: PVE Storage Function
-  mod: bashfunc
-  match: misc/build.func
-  args:
-  - check_container_storage
-  - codemods/check_container_storage.sh
-- description: PVE Build Function
-  mod: bashfunc
-  match: misc/build.func
-  args:
-  - build_container
-  - codemods/build_container.sh
-- description: Replace create_lxc
-  mod: replacefile
-  match: ct/create_lxc.sh
-  args:
-  - codemods/create_lxc.sh
-- description: Replace install
-  mod: bashfunc
-  match: misc/build.func
-  args:
-  - install_script
-  - codemods/install_script.sh
+  - github.com/upstream/repo
+  - github.com/myfork/repo
+ignorelist:
+- prefix: ct/
 
 ```
+
+See a [real world example](https://github.com/bketelsen/IncusScripts/blob/main/.surgeon.yaml)
+
+## ❤️ Community and Contributions
+
+We appreciate any contributions to the project—whether it's bug reports, feature requests, documentation improvements, or spreading the word. Your involvement helps keep the project alive and sustainable.
+
+---
+
+## 🤝 Report a Bug or Feature Request
+
+If you encounter any issues or have suggestions for improvement, file a new issue on our [GitHub issues page](https://github.com/bketelsen/surgeon/issues). You can also submit pull requests with solutions or enhancements!
+
+---
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=bketelsen/surgeon&type=Date)](https://star-history.com/#bketelsen/surgeon&Date)
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
+
