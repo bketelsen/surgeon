@@ -30,7 +30,7 @@ type Config struct {
 	Push       bool
 	ModsDir    string    `mapstructure:"modsdir"`
 	CodeMods   []CodeMod `mapstructure:"codemods"`
-	IgnoreList []Ignore  `mapstructure:"ignore"`
+	IgnoreList []Ignore  `mapstructure:"ignorelist"`
 }
 
 type Ignore struct {

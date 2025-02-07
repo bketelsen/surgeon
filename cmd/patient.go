@@ -280,6 +280,7 @@ func compareDirs(source, target string) ([]string, error) {
 
 func (p *Patient) IsIgnored(path string) bool {
 	for _, i := range p.Config.IgnoreList {
+		fmt.Println("Checking", path, i.Prefix)
 		if strings.HasPrefix(path, i.Prefix) {
 			fmt.Println("Ignoring", path)
 			return true
