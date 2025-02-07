@@ -84,7 +84,7 @@ func inject(where, contents, filePath string) error {
 		bb = append([]byte(contents), bb...)
 	case "end":
 		// add newline
-		contents = contents + "\n"
+		bb = append(bb, []byte("\n")...)
 		bb = append(bb, []byte(contents)...)
 	default:
 		line, err := strconv.Atoi(where)
