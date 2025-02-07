@@ -14,3 +14,11 @@ tasks:
     cmds:
       - go install .
     silent: true
+  release-snapshot:
+    cmds:
+      - goreleaser release --snapshot --clean
+    silent: true
+  release-check:
+    cmds:
+      - goreleaser check
+    silent: true
