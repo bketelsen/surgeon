@@ -6,6 +6,25 @@ See [IncusScripts](https://github.com/bketelsen/IncusScripts) which uses `surgeo
 to modify [community-scripts for Proxmox](https://github.com/community-scripts/ProxmoxVE)
 to run on Incus.
 
+Use `surgeon` to keep your fork up-to-date with an upstream, but make modifications during the process.
+
+For example:
+
+- use the `inject` module to add a license or credit to the upstream
+- use the `sed` module to change a function invocation to a different one
+- use the `replacefile` module to completely replace a single file
+
+Codemods implement a small-ish interface so it's easy to add new ones. PR's accepted if you find something you need.
+
+``` go
+type CodeMod interface {
+	Apply(source string, target string, match string, args ...string) error
+	Validate(source string, target string, match string, args ...string) error
+	Description() string
+	Usage() string
+}
+```
+
 ---
 
 ## 🚀 Project Overview
