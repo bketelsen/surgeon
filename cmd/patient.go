@@ -84,7 +84,7 @@ func (p *Patient) Operate() error {
 				}
 			}
 		}
-		return nil
+
 	}
 
 	// get the changed files in the upstream repository
