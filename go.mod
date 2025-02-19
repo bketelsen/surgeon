@@ -10,7 +10,7 @@ require (
 	mvdan.cc/sh v2.6.4+incompatible
 )
 
-require gitlab.com/greyxor/slogor v1.6.1 // indirect
+require gitlab.com/greyxor/slogor v1.6.1
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
