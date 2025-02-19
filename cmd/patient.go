@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,58 +30,78 @@ func NewPatient(config Config) *Patient {
 
 func (p *Patient) Operate() error {
 
+	slog.Debug("Opening fork git repository", "path", p.ForkRoot)
 	r, err := git.PlainOpen(p.ForkRoot)
 	if err != nil {
+		slog.Error("opening git repository", "error", err)
 		return fmt.Errorf("opening git repository: %w", err)
 	}
 	err = p.sanityCheck()
 	if err != nil {
+		slog.Error("sanity check failed", "error", err)
 		return fmt.Errorf("sanity check failed: %w", err)
 	}
 	p.forkRepo = r
 
 	// update the local fork
+	slog.Debug("Updating local fork")
 	err = p.updateLocalFork()
 	if err != nil {
+		slog.Error("updating local fork", "error", err)
 		return fmt.Errorf("updating local fork: %w", err)
 	}
 
 	// clone the upstream repository
+	slog.Debug("Cloning upstream repository")
 	err = p.Clone()
 	if err != nil {
+		slog.Error("cloning upstream repository", "error", err)
 		return fmt.Errorf("cloning upstream repository: %w", err)
 	}
+	defer os.RemoveAll(p.UpsreamRoot)
+
+	slog.Debug("Applying code mods")
 	for _, mod := range p.Config.CodeMods {
 		cm, ok := codemods.Mods[mod.Mod]
 		if !ok {
+			slog.Error("code mod not found", "mod", mod.Mod)
 			return fmt.Errorf("code mod %s not found", mod.Mod)
 		}
-		fmt.Printf("Applying codemod %s: %s\n", mod.Mod, mod.Description)
+		slog.Info("Applying codemod", "mod", mod.Mod, "description", mod.Description)
+		slog.Debug("Validating code mod")
 		err = cm.Validate(p.UpsreamRoot, p.ForkRoot, mod.Match, mod.Args...)
 		if err != nil {
+			slog.Error("validating code mod", "error", err)
 			return fmt.Errorf("validating code mod: %w", err)
 		}
+		slog.Debug("Applying code mod")
 		err = cm.Apply(p.UpsreamRoot, p.ForkRoot, mod.Match, mod.Args...)
 		if err != nil {
+			slog.Error("applying code mod", "error", err)
 			return fmt.Errorf("applying code mod: %w", err)
 		}
 
 	}
 
+	slog.Info("Comparing directories")
 	missing, err := compareDirs(p.UpsreamRoot, p.ForkRoot)
 	if err != nil {
+		slog.Error("comparing directories", "error", err)
 		return fmt.Errorf("comparing directories: %w", err)
 	}
 	if len(missing) > 0 {
-		fmt.Println("The following files are missing from the fork")
+		slog.Info("Found potential missing files", "count", len(missing))
 		for _, m := range missing {
 			if !strings.HasPrefix(m, ".git") {
-				fmt.Println(m)
+				slog.Debug("Testing file", "file", m)
 				if !p.IsIgnored(m) {
+					slog.Debug("Copying file", "file", m)
 					err = copyFile(m, p.UpsreamRoot, p.ForkRoot)
 					if err != nil {
 						return fmt.Errorf("copying file: %w", err)
 					}
+				} else {
+					slog.Info("Skipping ignored", "file", m)
 				}
 			}
 		}
@@ -88,21 +109,26 @@ func (p *Patient) Operate() error {
 	}
 
 	// get the changed files in the upstream repository
+	slog.Debug("Getting status of upstream repository")
 	w, err := p.upstreamRepo.Worktree()
 	if err != nil {
+		slog.Error("getting git worktree", "error", err)
 		return err
 	}
 	status, err := w.Status()
 	if err != nil {
+		slog.Error("getting worktree status", "error", err)
 		return err
 	}
-	fmt.Println(status)
+	//fmt.Println(status)
 	for s := range status {
-		fmt.Println(s)
+		//	fmt.Println(s)
 		// copy the file from the upstream repository to the fork
 		if !p.IsIgnored(s) {
+			slog.Debug("Copying file", "file", s)
 			err = copyFile(s, p.UpsreamRoot, p.ForkRoot)
 			if err != nil {
+				slog.Error("copying file", "error", err)
 				return fmt.Errorf("copying file: %w", err)
 			}
 		}
@@ -111,7 +137,7 @@ func (p *Patient) Operate() error {
 	var clean bool
 	// if the user wants to stage the changes, do so
 	if p.Config.Stage {
-		fmt.Println("Staging changes")
+		slog.Info("Staging changes")
 		w, err := p.forkRepo.Worktree()
 		if err != nil {
 			return fmt.Errorf("getting git worktree: %w", err)
@@ -121,12 +147,12 @@ func (p *Patient) Operate() error {
 			return fmt.Errorf("getting worktree status: %w", err)
 		}
 		if status.IsClean() {
-			fmt.Println("No changes to stage")
+			slog.Info("No changes to stage")
 			clean = true
 
 		} else {
 			for s := range status {
-				fmt.Println(s)
+				//fmt.Println(s)
 				_, err = w.Add(s)
 				if err != nil {
 					return fmt.Errorf("staging file in git: %w", err)
@@ -135,7 +161,7 @@ func (p *Patient) Operate() error {
 		}
 		// if the user wants to commit the changes, do so
 		if p.Config.Commit && !clean {
-			fmt.Println("Committing changes")
+			slog.Info("Committing changes")
 			_, err = w.Commit("chore: Surgeon changes", &git.CommitOptions{})
 			if err != nil {
 				return fmt.Errorf("committing changes: %w", err)
@@ -151,7 +177,6 @@ func (p *Patient) Operate() error {
 		}
 	}
 	// clean up the temporary directory
-	defer os.RemoveAll(p.UpsreamRoot)
 
 	return nil
 }
@@ -208,7 +233,7 @@ func (p *Patient) Clone() error {
 	if err != nil {
 		return fmt.Errorf("creating temporary directory: %w", err)
 	}
-	fmt.Println("Cloning upstream repository to", p.UpsreamRoot)
+	slog.Info("Cloning upstream repository ", "location", p.UpsreamRoot)
 	p.upstreamRepo, err = git.PlainClone(p.UpsreamRoot, false, &git.CloneOptions{
 		URL: p.Config.Upstream,
 	})
@@ -221,7 +246,7 @@ func (p *Patient) Clone() error {
 func copyFile(path, source, target string) error {
 	sourcePath := filepath.Join(source, path)
 	targetPath := filepath.Join(target, path)
-	fmt.Printf("Copying %s to %s\n", sourcePath, targetPath)
+	slog.Debug("Copying file", "source", sourcePath, "target", targetPath)
 	err := os.MkdirAll(filepath.Dir(targetPath), 0755)
 	if err != nil {
 		return fmt.Errorf("creating directory: %w", err)
@@ -252,6 +277,10 @@ func compareDirs(source, target string) ([]string, error) {
 		if err != nil {
 			return err
 		}
+		if info.IsDir() && info.Name() == ".git" {
+			slog.Debug("skipping git directory", "dir", info.Name())
+			return filepath.SkipDir
+		}
 		rel, err := filepath.Rel(source, path)
 		if err != nil {
 			return err
@@ -280,9 +309,9 @@ func compareDirs(source, target string) ([]string, error) {
 
 func (p *Patient) IsIgnored(path string) bool {
 	for _, i := range p.Config.IgnoreList {
-		fmt.Println("Checking", path, i.Prefix)
+		slog.Debug("Checking Ignore List", "path", path, "prefix", i.Prefix)
 		if strings.HasPrefix(path, i.Prefix) {
-			fmt.Println("Ignoring", path)
+			slog.Debug("Ignoring", "path", path)
 			return true
 		}
 	}

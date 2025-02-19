@@ -2,6 +2,7 @@ package codemods
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 
@@ -18,10 +19,9 @@ type SJSON struct{}
 var _ CodeMod = SJSON{}
 
 func (s SJSON) Apply(source, target, match string, args ...string) error {
-	fmt.Println("Source", source)
-	fmt.Println("Target", target)
-	fmt.Println("Match", match)
-	fmt.Println("Args", args)
+
+	slog.Info("Applying sjson", "source", source, "target", target, "match", match, "args", args)
+
 	sourceMatches := filepath.Join(source, match)
 	matches, err := filepath.Glob(sourceMatches)
 	if err != nil {
@@ -93,16 +93,16 @@ func apply(action, key, value, filePath string) (string, error) {
 	var output string
 	switch action {
 	case "set":
-		fmt.Println("Setting", key, "to", value)
+		slog.Debug("Setting", "key", key, "to", value)
 		output, err = sjson.Set(content, key, value)
 		if err != nil {
 			return "", err
 		}
-		fmt.Println("Output", output)
+		//fmt.Println("Output", output)
 
 	case "del":
 		// add newline
-		fmt.Println("Deleting", key)
+		slog.Debug("Deleting", "key", key)
 		output, err = sjson.Delete(content, key)
 		if err != nil {
 			return "", err

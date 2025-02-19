@@ -2,6 +2,7 @@ package codemods
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -19,10 +20,8 @@ type BashFunc struct{}
 var _ CodeMod = BashFunc{}
 
 func (s BashFunc) Apply(source, target, match string, args ...string) error {
-	fmt.Println("Source", source)
-	fmt.Println("Target", target)
-	fmt.Println("Match", match)
-	fmt.Println("Args", args)
+
+	slog.Info("Applying bash function replacer", "source", source, "target", target, "match", match, "args", args)
 	sourceMatches := filepath.Join(source, match)
 	matches, err := filepath.Glob(sourceMatches)
 	if err != nil {
@@ -97,11 +96,12 @@ func replaceFunction(name, replacementPath, filePath string) error {
 	if found {
 		// // read the replacement file
 		replacement, err := os.Open(replacementPath)
-		defer replacement.Close()
 		if err != nil {
 			fmt.Println("Error: ", err)
 			return err
 		}
+		defer replacement.Close()
+
 		replace, err := syntax.NewParser().Parse(replacement, "")
 		if err != nil {
 			return err

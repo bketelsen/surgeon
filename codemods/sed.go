@@ -2,6 +2,7 @@ package codemods
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,10 +18,9 @@ type Sed struct{}
 var _ CodeMod = Sed{}
 
 func (s Sed) Apply(source, target, match string, args ...string) error {
-	fmt.Println("Source", source)
-	fmt.Println("Target", target)
-	fmt.Println("Match", match)
-	fmt.Println("Args", args)
+
+	slog.Info("Applying sed", "source", source, "target", target, "match", match, "args", args)
+
 	sourceMatches := filepath.Join(source, match)
 	matches, err := filepath.Glob(sourceMatches)
 	if err != nil {

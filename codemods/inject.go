@@ -3,6 +3,7 @@ package codemods
 import (
 	"bytes"
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -19,10 +20,8 @@ type Inject struct{}
 var _ CodeMod = Inject{}
 
 func (s Inject) Apply(source, target, match string, args ...string) error {
-	fmt.Println("Source", source)
-	fmt.Println("Target", target)
-	fmt.Println("Match", match)
-	fmt.Println("Args", args)
+	slog.Info("Applying code injector", "source", source, "target", target, "match", match, "args", args)
+
 	sourceMatches := filepath.Join(source, match)
 	matches, err := filepath.Glob(sourceMatches)
 	if err != nil {
@@ -55,7 +54,7 @@ func (s Inject) Usage() string {
 This codemod modifies the matched file(s) by injecting specified content.
 
 Args (2 required):
-	1. Injection point in the file. Valid: "start", "end", line number
+	1. Injection point in the file. Valid: "start", "end", <line number>
 	2. The content to inject
 
 Example:
@@ -72,7 +71,7 @@ Example:
 }
 
 func inject(where, contents, filePath string) error {
-	fmt.Println("In", filePath, "with", contents, "at", where)
+	slog.Debug("Injecting", "contents", contents, "at", where, "in", filePath)
 	bb, err := os.ReadFile(filePath)
 	if err != nil {
 		return err

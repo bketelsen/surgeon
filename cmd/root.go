@@ -23,10 +23,13 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"gitlab.com/greyxor/slogor"
 )
 
 var cfgFile string
@@ -35,11 +38,14 @@ var modsdir string
 var stage bool
 var commit bool
 var push bool
+var verbose bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "surgeon",
-	Short: "Surgical forks of upstream repositories",
+	Use:               "surgeon",
+	Short:             "Surgical forks of upstream repositories",
+	PersistentPreRunE: initLogging,
+
 	Long: `Surgeon is a tool to make surgical changes to forks of upstream repositories.
 
 The surgeon command reads a configuration file in the current directory
@@ -51,7 +57,10 @@ code modifications to apply to the forked repository.
 The surgeon command will clone the upstream repository into a temporary directory,
 then apply the code modifications to the cloned repository.  The contents of the
 modified repository are copied to the current directory, overwriting any existing
-files.`,
+files.
+
+Important: modifications are applied in the order they are listed in the configuration,
+and have a cumulative effect.  Be sure to verify your modifications before committing.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
@@ -61,6 +70,7 @@ files.`,
 			fmt.Println(err)
 			return
 		}
+		slog.Debug("config", "upstream", c.Upstream, "modsdir", c.ModsDir, "stage", c.Stage, "commit", c.Commit, "push", c.Push)
 		project := NewPatient(c)
 		cobra.CheckErr(project.Operate())
 	},
@@ -93,6 +103,9 @@ func init() {
 	viper.BindPFlag("commit", rootCmd.PersistentFlags().Lookup("commit"))
 	rootCmd.PersistentFlags().BoolVar(&push, "push", false, "push changes to remote git repository")
 	viper.BindPFlag("push", rootCmd.PersistentFlags().Lookup("push"))
+	rootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "display verbose output")
+	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
+	// logging
 
 }
 
@@ -116,6 +129,15 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+		slog.Info("config", "file", viper.ConfigFileUsed())
 	}
+}
+
+func initLogging(cmd *cobra.Command, args []string) error {
+	if verbose {
+		slog.SetDefault(slog.New(slogor.NewHandler(os.Stderr, slogor.SetLevel(slog.LevelDebug), slogor.SetTimeFormat(time.Kitchen))))
+	} else {
+		slog.SetDefault(slog.New(slogor.NewHandler(os.Stderr, slogor.SetTimeFormat(time.Kitchen))))
+	}
+	return nil
 }
