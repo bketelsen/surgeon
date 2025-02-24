@@ -1,6 +1,6 @@
 module github.com/bketelsen/surgeon
 
-go 1.23.5
+go 1.23.4
 
 require (
 	github.com/go-git/go-git/v5 v5.13.2
@@ -10,7 +10,7 @@ require (
 	mvdan.cc/sh v2.6.4+incompatible
 )
 
-require gitlab.com/greyxor/slogor v1.6.1
+require github.com/bketelsen/toolbox v0.0.0-20250224145544-48c27b32bac4
 
 require (
 	dario.cat/mergo v1.0.0 // indirect

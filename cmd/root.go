@@ -22,14 +22,12 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
 	"log/slog"
 	"os"
-	"time"
 
+	"github.com/bketelsen/toolbox/tint"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gitlab.com/greyxor/slogor"
 )
 
 var cfgFile string
@@ -67,7 +65,7 @@ and have a cumulative effect.  Be sure to verify your modifications before commi
 
 		c, err := ReadConfig()
 		if err != nil {
-			fmt.Println(err)
+			slog.Error("Reading config", tint.Err(err))
 			return
 		}
 		slog.Debug("config", "upstream", c.Upstream, "modsdir", c.ModsDir, "stage", c.Stage, "commit", c.Commit, "push", c.Push)
@@ -134,10 +132,6 @@ func initConfig() {
 }
 
 func initLogging(cmd *cobra.Command, args []string) error {
-	if verbose {
-		slog.SetDefault(slog.New(slogor.NewHandler(os.Stderr, slogor.SetLevel(slog.LevelDebug), slogor.SetTimeFormat(time.Kitchen))))
-	} else {
-		slog.SetDefault(slog.New(slogor.NewHandler(os.Stderr, slogor.SetTimeFormat(time.Kitchen))))
-	}
+	tint.Initialize(cmd.OutOrStderr(), verbose)
 	return nil
 }
