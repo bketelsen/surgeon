@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  GREETING: Hello, World!
+  VERSION: 0.1.3
 
 tasks:
   build:
@@ -14,11 +14,8 @@ tasks:
     cmds:
       - go install .
     silent: true
-  release-snapshot:
+  publish:
     cmds:
-      - goreleaser release --snapshot --clean
-    silent: true
-  release-check:
-    cmds:
-      - goreleaser check
-    silent: true
+      - git push origin
+      - git tag v{{.VERSION}}
+      - git push --tags
