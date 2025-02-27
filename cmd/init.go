@@ -25,7 +25,6 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/bketelsen/toolbox/tint"
 	"github.com/spf13/cobra"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -66,12 +65,12 @@ Example configuration file:
 		}
 		bb, err := yaml.Marshal(config)
 		if err != nil {
-			slog.Error("Marshal config", tint.Err(err))
+			slog.Error("Marshal config", "error", err)
 			return
 		}
 		err = os.WriteFile(".surgeon.yaml", bb, 0644)
 		if err != nil {
-			slog.Error("Writing config", tint.Err(err))
+			slog.Error("Writing config", "error", err)
 			return
 		}
 	},

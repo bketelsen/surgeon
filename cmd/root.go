@@ -25,7 +25,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/bketelsen/toolbox/tint"
+	"github.com/lmittmann/tint"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -128,11 +128,22 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		slog.Info("config", "file", viper.ConfigFileUsed())
+		slog.Debug("config", "file", viper.ConfigFileUsed())
 	}
 }
 
 func initLogging(cmd *cobra.Command, args []string) error {
-	tint.Initialize(cmd.OutOrStderr(), verbose)
+
+	var options tint.Options
+	if verbose {
+		options.Level = slog.LevelDebug
+	} else {
+		options.Level = slog.LevelInfo
+	}
+	// create a new handler
+	handler := tint.NewHandler(cmd.OutOrStderr(), &options)
+	// set the default logger
+	slog.SetDefault(slog.New(handler))
+
 	return nil
 }
