@@ -24,6 +24,7 @@ package cmd
 import (
 	"log/slog"
 	"os"
+	"time"
 
 	"github.com/lmittmann/tint"
 	"github.com/spf13/cobra"
@@ -137,8 +138,11 @@ func initLogging(cmd *cobra.Command, args []string) error {
 	var options tint.Options
 	if verbose {
 		options.Level = slog.LevelDebug
+		options.TimeFormat = time.Kitchen
 	} else {
 		options.Level = slog.LevelInfo
+		options.TimeFormat = time.Kitchen
+
 	}
 	// create a new handler
 	handler := tint.NewHandler(cmd.OutOrStderr(), &options)
