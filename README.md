@@ -71,6 +71,8 @@ ignorelist:
 
 See a [real world example](https://github.com/bketelsen/IncusScripts/blob/main/.surgeon.yaml)
 
+IncusScripts uses surgeon as a GitHub Action. See the [action](https://github.com/bketelsen/IncusScripts/blob/main/.github/workflows/surgeon.yml)
+
 ## ❤️ Community and Contributions
 
 We appreciate any contributions to the project—whether it's bug reports, feature requests, documentation improvements, or spreading the word. Your involvement helps keep the project alive and sustainable.
