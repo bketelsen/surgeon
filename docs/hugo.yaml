@@ -1,0 +1,137 @@
+baseURL: https://bketelsen.github.io/surgeon/
+languageCode: en-us
+title: Surgeon
+# https://imfing.github.io/hextra/
+
+enableRobotsTXT: true
+# Parse Git commit
+enableGitInfo: true
+# enableEmoji: false
+hasCJKLanguage: true
+
+outputs:
+  home: [HTML]
+  page: [HTML]
+  section: [HTML, RSS]
+
+defaultContentLanguage: en
+
+
+markup:
+  highlight:
+    noClasses: false
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        delimiters:
+          block: [['\[', '\]'], ['$$', '$$']]
+          inline: [['\(', '\)']]
+        enable: true
+
+enableInlineShortcodes: true
+
+module:
+  imports:
+    - path: github.com/imfing/hextra
+
+
+menu:
+  main:
+    - identifier: documentation
+      name: Documentation
+      pageRef: /docs
+      weight: 1
+    - identifier: guides
+      name: Guides
+      pageRef: /docs/guides
+      weight: 2
+    - name: Search
+      weight: 5
+      params:
+        type: search
+    - name: GitHub
+      weight: 6
+      url: "https://github.com/bketelsen/surgeon"
+      params:
+        icon: github
+
+  sidebar:
+    - identifier: more
+      name: More
+      params:
+        type: separator
+      weight: 1
+
+    - identifier: incusDocs
+      name: "Example ↗"
+      url: "https://github.com/bketelsen/IncusScripts/blob/main/.surgeon.yaml"
+      weight: 2
+params:
+  description: "Surgeon: Modify your fork of an upstream repository with surgical precision."
+
+  navbar:
+    displayTitle: true
+    displayLogo: true
+    logo:
+      path: images/logo.svg
+      dark: images/logo-dark.svg
+      # width: 40
+      # height: 20
+      # link: /
+    width: wide
+
+  page:
+    # full (100%), wide (90rem), normal (1280px)
+    width: normal
+
+  theme:
+    # light | dark | system
+    default: system
+    displayToggle: true
+
+  footer:
+    enable: true
+    displayCopyright: false
+    displayPoweredBy: false
+    width: normal
+
+  # Display the last modification date
+  displayUpdatedDate: true
+  dateFormat: "January 2, 2006"
+
+  # Search
+  # flexsearch is enabled by default
+  search:
+    enable: true
+    type: flexsearch
+
+    flexsearch:
+      # index page by: content | summary | heading | title
+      index: content
+      # full | forward | reverse | strict
+      # https://github.com/nextapps-de/flexsearch/#tokenizer-prefix-search
+      tokenize: forward
+
+  editURL:
+    enable: true
+    base: "https://github.com/bketelsen/surgeon/edit/main/docs/content"
+
+  blog:
+    list:
+      displayTags: true
+      # date | lastmod | publishDate | title | weight
+      sortBy: date
+      sortOrder: desc # or "asc"
+
+  highlight:
+    copy:
+      enable: true
+      # hover | always
+      display: hover
+
+  comments:
+    enable: false
+    type: giscus
+

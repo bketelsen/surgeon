@@ -25,7 +25,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/spf13/cobra"
+	"github.com/bketelsen/toolbox/cobra"
 	yaml "gopkg.in/yaml.v2"
 )
 
@@ -43,12 +43,10 @@ Example configuration file:
 	modsdir: mymods
 `,
 	Run: func(cmd *cobra.Command, args []string) {
+		slog.SetDefault(cmd.Logger)
 		config := Config{
 			Upstream: "https://some.repository.com/upstream/repo",
 			ModsDir:  "mymods",
-			Stage:    true,
-			Commit:   true,
-			Push:     false,
 			IgnoreList: []Ignore{
 				{
 					Prefix: "ct",

@@ -5,9 +5,10 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/bketelsen/surgeon/codemods"
-	"github.com/spf13/cobra"
+	"github.com/bketelsen/toolbox/cobra"
 )
 
 // describeCmd represents the describe command
@@ -18,6 +19,7 @@ var describeCmd = &cobra.Command{
 	Long: `Describe a codemod in detail.
 Show the usage and arguments for a codemod.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		slog.SetDefault(cmd.Logger)
 		cm, ok := codemods.Mods[args[0]]
 		if !ok {
 			fmt.Printf("Error: code mod %s not found\n", args[0])
