@@ -22,28 +22,40 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
-	"time"
 
+	"github.com/bketelsen/toolbox/cobra"
 	"github.com/lmittmann/tint"
-	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
 var upstream string
 var modsdir string
-var stage bool
-var commit bool
-var push bool
+var version string
+var commit string
 var verbose bool
+
+func versionString() string {
+	if len(commit) > 7 {
+		commit = commit[:7]
+	}
+	if len(commit) == 0 {
+		commit = "unknown"
+	}
+	if len(version) == 0 {
+		version = "unknown"
+	}
+	return fmt.Sprintf("%s (%s)", version, commit)
+}
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:               "surgeon",
-	Short:             "Surgical forks of upstream repositories",
-	PersistentPreRunE: initLogging,
+	Use:     "surgeon",
+	Version: versionString(),
+	Short:   "Surgical forks of upstream repositories",
 
 	Long: `Surgeon is a tool to make surgical changes to forks of upstream repositories.
 
@@ -63,13 +75,13 @@ and have a cumulative effect.  Be sure to verify your modifications before commi
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-
+		slog.SetDefault(cmd.Logger)
 		c, err := ReadConfig()
 		if err != nil {
-			slog.Error("Reading config", tint.Err(err))
+			cmd.Logger.Error("Reading config", tint.Err(err))
 			return
 		}
-		slog.Debug("config", "upstream", c.Upstream, "modsdir", c.ModsDir, "stage", c.Stage, "commit", c.Commit, "push", c.Push)
+		cmd.Logger.Debug("config", "upstream", c.Upstream, "modsdir", c.ModsDir)
 		project := NewPatient(c)
 		cobra.CheckErr(project.Operate())
 	},
@@ -97,12 +109,6 @@ func init() {
 	viper.BindPFlag("upstream", rootCmd.PersistentFlags().Lookup("upstream"))
 	rootCmd.PersistentFlags().StringVar(&modsdir, "modsdir", "", "directory containing code modification files")
 	viper.BindPFlag("modsdir", rootCmd.PersistentFlags().Lookup("modsdir"))
-	rootCmd.PersistentFlags().BoolVar(&stage, "stage", false, "stage changes in git")
-	viper.BindPFlag("stage", rootCmd.PersistentFlags().Lookup("stage"))
-	rootCmd.PersistentFlags().BoolVar(&commit, "commit", false, "commit changes in git")
-	viper.BindPFlag("commit", rootCmd.PersistentFlags().Lookup("commit"))
-	rootCmd.PersistentFlags().BoolVar(&push, "push", false, "push changes to remote git repository")
-	viper.BindPFlag("push", rootCmd.PersistentFlags().Lookup("push"))
 	rootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "display verbose output")
 	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
 	// logging
@@ -119,7 +125,7 @@ func initConfig() {
 		pwd, err := os.Getwd()
 		cobra.CheckErr(err)
 
-		// Search config in home directory with name ".surgeon.yaml".
+		// Search config in current directory with name ".surgeon.yaml".
 		viper.AddConfigPath(pwd)
 		viper.SetConfigType("yaml")
 		viper.SetConfigName(".surgeon.yaml")
@@ -131,23 +137,4 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		slog.Debug("config", "file", viper.ConfigFileUsed())
 	}
-}
-
-func initLogging(cmd *cobra.Command, args []string) error {
-
-	var options tint.Options
-	if verbose {
-		options.Level = slog.LevelDebug
-		options.TimeFormat = time.Kitchen
-	} else {
-		options.Level = slog.LevelInfo
-		options.TimeFormat = time.Kitchen
-
-	}
-	// create a new handler
-	handler := tint.NewHandler(cmd.OutOrStderr(), &options)
-	// set the default logger
-	slog.SetDefault(slog.New(handler))
-
-	return nil
 }

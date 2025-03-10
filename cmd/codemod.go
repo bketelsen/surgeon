@@ -4,7 +4,7 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"github.com/spf13/cobra"
+	"github.com/bketelsen/toolbox/cobra"
 )
 
 // codemodCmd represents the codemod command

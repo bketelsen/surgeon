@@ -134,50 +134,6 @@ func (p *Patient) Operate() error {
 		}
 	}
 
-	var clean bool
-	// if the user wants to stage the changes, do so
-	if p.Config.Stage {
-		slog.Info("Staging changes")
-		w, err := p.forkRepo.Worktree()
-		if err != nil {
-			return fmt.Errorf("getting git worktree: %w", err)
-		}
-		status, err := w.Status()
-		if err != nil {
-			return fmt.Errorf("getting worktree status: %w", err)
-		}
-		if status.IsClean() {
-			slog.Info("No changes to stage")
-			clean = true
-
-		} else {
-			for s := range status {
-				//fmt.Println(s)
-				_, err = w.Add(s)
-				if err != nil {
-					return fmt.Errorf("staging file in git: %w", err)
-				}
-			}
-		}
-		// if the user wants to commit the changes, do so
-		if p.Config.Commit && !clean {
-			slog.Info("Committing changes")
-			_, err = w.Commit("chore: Surgeon changes", &git.CommitOptions{})
-			if err != nil {
-				return fmt.Errorf("committing changes: %w", err)
-			}
-			// // if the user wants to push the changes, do so
-			// if p.Config.Push {
-			// 	fmt.Println("Pushing changes")
-			// 	err = p.forkRepo.Push(&git.PushOptions{})
-			// 	if err != nil {
-			// 		return fmt.Errorf("pushing changes: %w", err)
-			// 	}
-			// }
-		}
-	}
-	// clean up the temporary directory
-
 	return nil
 }
 
