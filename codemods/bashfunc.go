@@ -121,13 +121,12 @@ func replaceFunction(name, replacementPath, filePath string) error {
 		lines := strings.Split(contents, "\n")
 		var before []string
 		var after []string
-		var inside []string
 
 		for i, line := range lines {
 			if i < int(startpos-1) {
 				before = append(before, line)
 			} else if i >= int(startpos-1) && i < int(endpos) {
-				inside = append(inside, line)
+				continue
 			} else {
 				after = append(after, line)
 			}

@@ -43,7 +43,6 @@ Example configuration file:
 	modsdir: mymods
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		slog.SetDefault(cmd.Logger)
 		config := Config{
 			Upstream: "https://some.repository.com/upstream/repo",
 			ModsDir:  "mymods",

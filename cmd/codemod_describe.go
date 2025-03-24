@@ -4,11 +4,9 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
-	"log/slog"
-
 	"github.com/bketelsen/surgeon/codemods"
 	"github.com/bketelsen/toolbox/cobra"
+	"github.com/bketelsen/toolbox/ui"
 )
 
 // describeCmd represents the describe command
@@ -19,13 +17,12 @@ var describeCmd = &cobra.Command{
 	Long: `Describe a codemod in detail.
 Show the usage and arguments for a codemod.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		slog.SetDefault(cmd.Logger)
 		cm, ok := codemods.Mods[args[0]]
 		if !ok {
-			fmt.Printf("Error: code mod %s not found\n", args[0])
+			ui.Error("code mod not found", args[0])
 			return
 		}
-		fmt.Println(cm.Usage())
+		cmd.Println(cm.Usage())
 
 	},
 }

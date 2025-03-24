@@ -22,11 +22,12 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
 	"log/slog"
 	"os"
+	"strings"
 
 	"github.com/bketelsen/toolbox/cobra"
+	goversion "github.com/bketelsen/toolbox/go-version"
 	"github.com/lmittmann/tint"
 	"github.com/spf13/viper"
 )
@@ -34,28 +35,47 @@ import (
 var cfgFile string
 var upstream string
 var modsdir string
-var version string
-var commit string
-var verbose bool
+var appname = "inventory"
+var (
+	version   = ""
+	commit    = ""
+	treeState = ""
+	date      = ""
+	builtBy   = ""
+)
 
-func versionString() string {
-	if len(commit) > 7 {
-		commit = commit[:7]
-	}
-	if len(commit) == 0 {
-		commit = "unknown"
-	}
-	if len(version) == 0 {
-		version = "unknown"
-	}
-	return fmt.Sprintf("%s (%s)", version, commit)
-}
+var bversion = buildVersion(version, commit, date, builtBy, treeState)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "surgeon",
-	Version: versionString(),
-	Short:   "Surgical forks of upstream repositories",
+	Version: bversion.String(),
+	InitConfig: func() *viper.Viper {
+		config := viper.New()
+		config.SetEnvPrefix(appname)
+		config.AutomaticEnv()
+		config.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", ""))
+		config.SetConfigType("yaml")
+		config.SetConfigFile(cfgFile)
+		config.SetConfigName(".surgeon.yaml") // name of config file
+		config.AddConfigPath(".")             // optionally look for config in the working directory
+		if err := config.ReadInConfig(); err == nil {
+			slog.Info("Using config file:", slog.String("file", config.ConfigFileUsed()))
+		} else {
+			slog.Info("No config file found, using defaults")
+		}
+		return config
+	},
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		// set the slog default logger to the cobra logger
+		slog.SetDefault(cmd.Logger)
+		// set log level based on the --verbose flag
+		if cmd.GlobalConfig().GetBool("verbose") {
+			cmd.SetLogLevel(slog.LevelDebug)
+			cmd.Logger.Debug("Debug logging enabled")
+		}
+	},
+	Short: "Surgical forks of upstream repositories",
 
 	Long: `Surgeon is a tool to make surgical changes to forks of upstream repositories.
 
@@ -75,7 +95,6 @@ and have a cumulative effect.  Be sure to verify your modifications before commi
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		slog.SetDefault(cmd.Logger)
 		c, err := ReadConfig()
 		if err != nil {
 			cmd.Logger.Error("Reading config", tint.Err(err))
@@ -98,43 +117,53 @@ func Execute() {
 
 func init() {
 
-	cobra.OnInitialize(initConfig)
-
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is .surgeon.yaml)")
 	rootCmd.PersistentFlags().StringVar(&upstream, "upstream", "", "upstream repository")
-	viper.BindPFlag("upstream", rootCmd.PersistentFlags().Lookup("upstream"))
 	rootCmd.PersistentFlags().StringVar(&modsdir, "modsdir", "", "directory containing code modification files")
-	viper.BindPFlag("modsdir", rootCmd.PersistentFlags().Lookup("modsdir"))
-	rootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "display verbose output")
-	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
+	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "verbose logging")
+
 	// logging
 
 }
 
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find current directory.
-		pwd, err := os.Getwd()
-		cobra.CheckErr(err)
+// https://www.asciiart.eu/text-to-ascii-art to make your own
+// just make sure the font doesn't have backticks in the letters or
+// it will break the string quoting
+var asciiName = `
+███████╗██╗   ██╗██████╗  ██████╗ ███████╗ ██████╗ ███╗   ██╗
+██╔════╝██║   ██║██╔══██╗██╔════╝ ██╔════╝██╔═══██╗████╗  ██║
+███████╗██║   ██║██████╔╝██║  ███╗█████╗  ██║   ██║██╔██╗ ██║
+╚════██║██║   ██║██╔══██╗██║   ██║██╔══╝  ██║   ██║██║╚██╗██║
+███████║╚██████╔╝██║  ██║╚██████╔╝███████╗╚██████╔╝██║ ╚████║
+╚══════╝ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝
+`
 
-		// Search config in current directory with name ".surgeon.yaml".
-		viper.AddConfigPath(pwd)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName(".surgeon.yaml")
-	}
+// buildVersion builds the version info for the application
+func buildVersion(version, commit, date, builtBy, treeState string) goversion.Info {
+	return goversion.GetVersionInfo(
+		goversion.WithAppDetails(appname, "Collect and report deployment information.", "https://bketelsen.github.io/inventory"),
+		goversion.WithASCIIName(asciiName),
+		func(i *goversion.Info) {
+			if commit != "" {
+				i.GitCommit = commit
+			}
+			if treeState != "" {
+				i.GitTreeState = treeState
+			}
+			if date != "" {
+				i.BuildDate = date
+			}
+			if version != "" {
+				i.GitVersion = version
+			}
+			if builtBy != "" {
+				i.BuiltBy = builtBy
+			}
 
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		slog.Debug("config", "file", viper.ConfigFileUsed())
-	}
+		},
+	)
 }

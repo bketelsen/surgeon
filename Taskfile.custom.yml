@@ -1,0 +1,15 @@
+version: '3'
+
+
+tasks:
+
+  release-local:
+    desc: Build and install locally using goreleaser
+    vars:
+      GOOS: '{{OS}}'
+      GOARCH: '{{ARCH}}'
+    cmds:
+      - GOOS={{.GOOS}} GOARCH={{.GOARCH}} goreleaser release --single-target --snapshot --clean 
+      - 'cp ./dist/{{.GOOS}}_{{.GOARCH}}/surgeon_{{.GOOS}}_{{.GOARCH}}_v1/surgeon /go/bin/surgeon'
+      - 'echo Release for {{.GOOS}}/{{.GOARCH}}'
+    silent: true

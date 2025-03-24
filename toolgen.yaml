@@ -1,0 +1,18 @@
+actionsgo: true
+actionspages: true
+appname: surgeon
+author: Brian Ketelsen
+basepath: /surgeon
+config: toolgen.yaml
+devcontainer: true
+docs: true
+email: bketelsen@gmail.com
+installer: true
+license: mit
+modulename: github.com/bketelsen/surgeon
+owner: bketelsen
+releaser: true
+repo: surgeon
+repository: https://github.com/bketelsen/surgeon
+taskfile: true
+verbose: false
