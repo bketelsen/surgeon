@@ -45,7 +45,7 @@ to run on Incus.
 
 ## 🚀 Installation / Usage
 
-Clone and build the repository with Go
+See [installation documentation](https://bketelsen.github.io/surgeon/installation/)
 
 ---
 
