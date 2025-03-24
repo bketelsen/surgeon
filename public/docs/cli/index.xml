@@ -1,0 +1,752 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>surgeon – CLI Reference</title>
+    <link>http://localhost:1313/surgeon/docs/cli/</link>
+    <description>Recent content in CLI Reference on surgeon</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Mar 2025 19:05:46 +0000</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/surgeon/docs/cli/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>surgeon</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Surgical forks of upstream repositories&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Surgeon is a tool to make surgical changes to forks of upstream repositories.&lt;/p&gt;
+&lt;p&gt;The surgeon command reads a configuration file in the current directory
+named &amp;lsquo;.surgeon.yaml&amp;rsquo;.  This file contains the configuration for the
+surgeon command.  The configuration file contains the upstream repository
+URL, the directory containing the code modification files, and a list of
+code modifications to apply to the forked repository.&lt;/p&gt;
+&lt;p&gt;The surgeon command will clone the upstream repository into a temporary directory,
+then apply the code modifications to the cloned repository.  The contents of the
+modified repository are copied to the current directory, overwriting any existing
+files.&lt;/p&gt;
+&lt;p&gt;Important: modifications are applied in the order they are listed in the configuration,
+and have a cumulative effect.  Be sure to verify your modifications before committing.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+  -h, --help              help for surgeon
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_codemod/&#34; &gt;surgeon codemod&lt;/a&gt;	 - Work with codemods&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion/&#34; &gt;surgeon completion&lt;/a&gt;	 - Generate the autocompletion script for the specified shell&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_init/&#34; &gt;surgeon init&lt;/a&gt;	 - Initialize a new surgical fork&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon codemod</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_codemod/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_codemod/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon codemod&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-codemod&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-codemod&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Work with codemods&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Commands to work with codemods.&lt;/p&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help   help for codemod&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon/&#34; &gt;surgeon&lt;/a&gt;	 - Surgical forks of upstream repositories&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_codemod_describe/&#34; &gt;surgeon codemod describe&lt;/a&gt;	 - Describe a codemod&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_codemod_list/&#34; &gt;surgeon codemod list&lt;/a&gt;	 - List available codemods&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon codemod describe</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_codemod_describe/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_codemod_describe/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon codemod describe&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-codemod-describe&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-codemod-describe&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Describe a codemod&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Describe a codemod in detail.
+Show the usage and arguments for a codemod.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon codemod describe &amp;lt;codemod&amp;gt; [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help   help for describe&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_codemod/&#34; &gt;surgeon codemod&lt;/a&gt;	 - Work with codemods&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon codemod list</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_codemod_list/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_codemod_list/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon codemod list&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-codemod-list&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-codemod-list&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;List available codemods&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;List all available codemods.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon codemod list [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help   help for list&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_codemod/&#34; &gt;surgeon codemod&lt;/a&gt;	 - Work with codemods&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon completion</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_completion/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_completion/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon completion&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-completion&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-completion&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Generate the autocompletion script for the specified shell&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Generate the autocompletion script for surgeon for the specified shell.
+See each sub-command&amp;rsquo;s help for details on how to use the generated script.&lt;/p&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help   help for completion&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon/&#34; &gt;surgeon&lt;/a&gt;	 - Surgical forks of upstream repositories&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion_bash/&#34; &gt;surgeon completion bash&lt;/a&gt;	 - Generate the autocompletion script for bash&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion_fish/&#34; &gt;surgeon completion fish&lt;/a&gt;	 - Generate the autocompletion script for fish&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion_powershell/&#34; &gt;surgeon completion powershell&lt;/a&gt;	 - Generate the autocompletion script for powershell&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion_zsh/&#34; &gt;surgeon completion zsh&lt;/a&gt;	 - Generate the autocompletion script for zsh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon completion bash</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_completion_bash/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_completion_bash/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon completion bash&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-completion-bash&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-completion-bash&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Generate the autocompletion script for bash&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Generate the autocompletion script for the bash shell.&lt;/p&gt;
+&lt;p&gt;This script depends on the &amp;lsquo;bash-completion&amp;rsquo; package.
+If it is not installed already, you can install it via your OS&amp;rsquo;s package manager.&lt;/p&gt;
+&lt;p&gt;To load completions in your current shell session:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source &amp;lt;(surgeon completion bash)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To load completions for every new session, execute once:&lt;/p&gt;
+&lt;h4&gt;Linux:&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;linux&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#linux&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;surgeon completion bash &amp;gt; /etc/bash_completion.d/surgeon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;macOS:&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;macos&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#macos&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;surgeon completion bash &amp;gt; $(brew --prefix)/etc/bash_completion.d/surgeon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You will need to start a new shell for this setup to take effect.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon completion bash&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help              help for bash
+      --no-descriptions   disable completion descriptions&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion/&#34; &gt;surgeon completion&lt;/a&gt;	 - Generate the autocompletion script for the specified shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon completion fish</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_completion_fish/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_completion_fish/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon completion fish&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-completion-fish&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-completion-fish&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Generate the autocompletion script for fish&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Generate the autocompletion script for the fish shell.&lt;/p&gt;
+&lt;p&gt;To load completions in your current shell session:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;surgeon completion fish | source
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To load completions for every new session, execute once:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;surgeon completion fish &amp;gt; ~/.config/fish/completions/surgeon.fish
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You will need to start a new shell for this setup to take effect.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon completion fish [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help              help for fish
+      --no-descriptions   disable completion descriptions&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion/&#34; &gt;surgeon completion&lt;/a&gt;	 - Generate the autocompletion script for the specified shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon completion powershell</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_completion_powershell/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_completion_powershell/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon completion powershell&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-completion-powershell&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-completion-powershell&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Generate the autocompletion script for powershell&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Generate the autocompletion script for powershell.&lt;/p&gt;
+&lt;p&gt;To load completions in your current shell session:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;surgeon completion powershell | Out-String | Invoke-Expression
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To load completions for every new session, add the output of the above command
+to your powershell profile.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon completion powershell [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help              help for powershell
+      --no-descriptions   disable completion descriptions&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion/&#34; &gt;surgeon completion&lt;/a&gt;	 - Generate the autocompletion script for the specified shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon completion zsh</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_completion_zsh/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_completion_zsh/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon completion zsh&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-completion-zsh&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-completion-zsh&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Generate the autocompletion script for zsh&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Generate the autocompletion script for the zsh shell.&lt;/p&gt;
+&lt;p&gt;If shell completion is not already enabled in your environment you will need
+to enable it.  You can execute the following once:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo &amp;quot;autoload -U compinit; compinit&amp;quot; &amp;gt;&amp;gt; ~/.zshrc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To load completions in your current shell session:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;source &amp;lt;(surgeon completion zsh)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To load completions for every new session, execute once:&lt;/p&gt;
+&lt;h4&gt;Linux:&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;linux&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#linux&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;surgeon completion zsh &amp;gt; &amp;quot;${fpath[1]}/_surgeon&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;macOS:&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;macos&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#macos&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;surgeon completion zsh &amp;gt; $(brew --prefix)/share/zsh/site-functions/_surgeon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You will need to start a new shell for this setup to take effect.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon completion zsh [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help              help for zsh
+      --no-descriptions   disable completion descriptions&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon_completion/&#34; &gt;surgeon completion&lt;/a&gt;	 - Generate the autocompletion script for the specified shell&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon init</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_init/</link>
+      <pubDate>Mon, 24 Mar 2025 19:05:46 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_init/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon init&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-init&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-init&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Initialize a new surgical fork&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The init command will create a new &amp;lsquo;.surgeon.yaml&amp;rsquo;
+file in the current directory.	This file will contain
+the configuration for the surgeon command.&lt;/p&gt;
+&lt;p&gt;Example configuration file:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;upstream: https://github.com/community-scripts/ProxmoxVE
+modsdir: mymods
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon init [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -h, --help   help for init&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon/&#34; &gt;surgeon&lt;/a&gt;	 - Surgical forks of upstream repositories&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+    <item>
+      <title>surgeon gendocs</title>
+      <link>http://localhost:1313/surgeon/docs/cli/surgeon_gendocs/</link>
+      <pubDate>Mon, 24 Mar 2025 18:57:42 +0000</pubDate>
+      
+      <guid>http://localhost:1313/surgeon/docs/cli/surgeon_gendocs/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;surgeon gendocs&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;surgeon-gendocs&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#surgeon-gendocs&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Generates documentation for the project&lt;/p&gt;
+&lt;h3&gt;Synopsis&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;synopsis&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#synopsis&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;A longer description that spans multiple lines and likely contains examples
+and usage of using your command. For example:&lt;/p&gt;
+&lt;p&gt;Cobra is a CLI library for Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.&lt;/p&gt;
+&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;surgeon gendocs [flags]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;  -b, --basepath string   Base path for the documentation (default is /surgeon) (default &amp;#34;surgeon&amp;#34;)
+  -h, --help              help for gendocs&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Options inherited from parent commands&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;options-inherited-from-parent-commands&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#options-inherited-from-parent-commands&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
+
+&lt;div&gt;&lt;pre&gt;&lt;code&gt;      --config string     config file (default is .surgeon.yaml)
+      --modsdir string    directory containing code modification files
+      --upstream string   upstream repository
+  -v, --verbose           verbose logging&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
+  &lt;button
+    class=&#34;hextra-code-copy-btn hx-group/copybtn hx-transition-all active:hx-opacity-50 hx-bg-primary-700/5 hx-border hx-border-black/5 hx-text-gray-600 hover:hx-text-gray-900 hx-rounded-md hx-p-1.5 dark:hx-bg-primary-300/10 dark:hx-border-white/10 dark:hx-text-gray-400 dark:hover:hx-text-gray-50&#34;
+    title=&#34;Copy code&#34;
+  &gt;
+    &lt;div class=&#34;copy-icon group-[.copied]/copybtn:hx-hidden hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;SEE ALSO&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;see-also&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#see-also&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://localhost:1313/surgeon/docs/cli/surgeon/&#34; &gt;surgeon&lt;/a&gt;	 - Surgical forks of upstream repositories&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h6&gt;Auto generated by toolbox on 24-Mar-2025&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;auto-generated-by-toolbox-on-24-mar-2025&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#auto-generated-by-toolbox-on-24-mar-2025&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h6&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>

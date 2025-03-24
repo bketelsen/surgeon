@@ -1,7 +1,7 @@
+# .github/workflows/release.yml
 name: goreleaser
 
 on:
-  pull_request:
   push:
     # run only against tags
     tags:
@@ -39,4 +39,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
           GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
-
+          # Uncomment for announcements
+          # BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}

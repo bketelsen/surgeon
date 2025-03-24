@@ -4,8 +4,6 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"log/slog"
-
 	"github.com/bketelsen/surgeon/codemods"
 
 	"github.com/bketelsen/toolbox/cobra"
@@ -18,7 +16,6 @@ var listCmd = &cobra.Command{
 	Short: "List available codemods",
 	Long:  `List all available codemods.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		slog.SetDefault(cmd.Logger)
 		var list []List
 		// Iterate over the mods and add them to the list
 		for name, mod := range codemods.Mods {

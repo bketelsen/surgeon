@@ -1,45 +1,52 @@
 # https://taskfile.dev
+# Generated File, changes may be lost
+# Add `Taskfile.custom.yml` in this directory with your additions
 
 version: '3'
 
 vars:
-  VERSION: 0.2.1
+  VERSION: 0.2.2
+
+includes:
+  docs:
+    taskfile: Taskfile.docs.yml
+    optional: true
+  checks:
+    taskfile: Taskfile.checks.yml
+    optional: true
+  release:
+    taskfile: Taskfile.release.yml
+    optional: true
+  custom:
+    taskfile: Taskfile.custom.yml
+    optional: true
 
 tasks:
   build:
+    desc: Build the application
+    summary: |
+      Build the application with ldflags to set the version with a -dev suffix.
+
+      Output: 'surgeon' in project root.
     cmds:
-      - go build -o surgeon -ldflags '-s -w -X github.com/bketelsen/surgeon/cmd.version={{.VERSION}}-dev' main.go 
+      - go build -o surgeon -ldflags '-s -w -X github.com/bketelsen/surgeon/cmd.version={{.VERSION}}-dev' main.go
     silent: true
-  install-goreleaser:
+
+  tools:
+    desc: Install required tools
     cmds:
-      - wget https://github.com/goreleaser/goreleaser-pro/releases/download/v2.7.0-pro/goreleaser-pro_2.7.0_amd64.deb
-      - sudo dpkg -i goreleaser-pro_2.7.0_amd64.deb 
-      - rm goreleaser-pro_2.7.0_amd64.deb 
+      - go install github.com/bketelsen/toolbox/toolgen@latest
+
+  direnv:
+    desc: Add direnv hook to your bashrc
+    cmds:
+      - direnv hook bash >> ~/.bashrc
     silent: true
-  release-snapshot:
-    cmds:
-      - goreleaser release --snapshot --clean
-    silent: true
-  release-check:
-    cmds:
-      - goreleaser check
-    silent: true
-  install:
-    cmds:
-      - go install .
-    silent: true
-  publish:
-    cmds:
-      - git push origin
-      - git tag v{{.VERSION}}
-      - git push --tags
+
   generate:
+    desc: Generate CLI documentation
+    deps: [tools]
     cmds:
-      - go run main.go docs -b "/surgeon"
+      - go run main.go gendocs -b "/surgeon"
     silent: true
-  site:
-    desc: Run hugo dev server
-    deps: [build, generate]
-    dir: docs
-    cmds:
-      - hugo server --buildDrafts --disableFastRender
+
