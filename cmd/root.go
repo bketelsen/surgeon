@@ -144,7 +144,7 @@ var asciiName = `
 // buildVersion builds the version info for the application
 func buildVersion(version, commit, date, builtBy, treeState string) goversion.Info {
 	return goversion.GetVersionInfo(
-		goversion.WithAppDetails(appname, "Collect and report deployment information.", "https://bketelsen.github.io/inventory"),
+		goversion.WithAppDetails(appname, "Collect and report deployment information.", "https://bketelsen.github.io/surgeon"),
 		goversion.WithASCIIName(asciiName),
 		func(i *goversion.Info) {
 			if commit != "" {
