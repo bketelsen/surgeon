@@ -44,7 +44,6 @@ type CodeMod struct {
 }
 
 func ReadConfig(path string) (Config, error) {
-
 	viper.SetConfigFile(path)
 	viper.SetConfigType("yaml")
 	viper.ReadInConfig()

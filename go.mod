@@ -5,11 +5,10 @@ go 1.23.4
 require (
 	github.com/go-git/go-git/v5 v5.14.0
 	github.com/spf13/viper v1.20.0
-	gopkg.in/yaml.v2 v2.4.0
 	mvdan.cc/sh v2.6.4+incompatible
 )
 
-require github.com/bketelsen/toolbox v0.4.3
+require github.com/bketelsen/toolbox v0.4.5
 
 require (
 	github.com/charmbracelet/bubbles v0.20.0 // indirect
@@ -33,7 +32,6 @@ require (
 	github.com/charmbracelet/x/ansi v0.8.0 // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/jedib0t/go-pretty/v6 v6.6.7 // indirect
-	github.com/lmittmann/tint v1.0.7
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
@@ -78,5 +76,5 @@ require (
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gopkg.in/yaml.v3 v3.0.1
 )

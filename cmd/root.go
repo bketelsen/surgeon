@@ -22,20 +22,19 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 	"strings"
 
 	"github.com/bketelsen/toolbox/cobra"
 	goversion "github.com/bketelsen/toolbox/go-version"
-	"github.com/lmittmann/tint"
+	"github.com/bketelsen/toolbox/slug"
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
-var upstream string
-var modsdir string
-var appname = "inventory"
+// var cfgFile string
+var appname = "surgeon"
 var (
 	version   = ""
 	commit    = ""
@@ -56,13 +55,13 @@ var rootCmd = &cobra.Command{
 		config.AutomaticEnv()
 		config.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", ""))
 		config.SetConfigType("yaml")
-		config.SetConfigFile(cfgFile)
 		config.SetConfigName(".surgeon.yaml") // name of config file
 		config.AddConfigPath(".")             // optionally look for config in the working directory
 		if err := config.ReadInConfig(); err == nil {
 			slog.Info("Using config file:", slog.String("file", config.ConfigFileUsed()))
 		} else {
-			slog.Info("No config file found, using defaults")
+			slog.Error("Error reading config file", slug.Err(err))
+			os.Exit(1)
 		}
 		return config
 	},
@@ -95,9 +94,11 @@ and have a cumulative effect.  Be sure to verify your modifications before commi
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("Run:", cmd.GlobalConfig().AllKeys())
+
 		c, err := ReadConfig(cmd.GlobalConfig().ConfigFileUsed())
 		if err != nil {
-			cmd.Logger.Error("Reading config", tint.Err(err))
+			cmd.Logger.Error("Reading config", slug.Err(err))
 			return
 		}
 		cmd.Logger.Debug("config", "upstream", c.Upstream, "modsdir", c.ModsDir)
@@ -121,9 +122,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is .surgeon.yaml)")
-	rootCmd.PersistentFlags().StringVar(&upstream, "upstream", "", "upstream repository")
-	rootCmd.PersistentFlags().StringVar(&modsdir, "modsdir", "", "directory containing code modification files")
+	//	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is .surgeon.yaml)")
 	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "verbose logging")
 
 	// logging

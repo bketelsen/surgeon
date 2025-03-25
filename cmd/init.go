@@ -26,7 +26,7 @@ import (
 	"os"
 
 	"github.com/bketelsen/toolbox/cobra"
-	yaml "gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v3"
 )
 
 // initCmd represents the init command
