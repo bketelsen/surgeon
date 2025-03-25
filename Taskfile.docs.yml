@@ -9,7 +9,7 @@ tasks:
     cmds:
       - task: :build
       - task: :generate
-      - hugo server --buildDrafts --disableFastRender
+      - hugo server --config ./site/hugo.yaml --buildDrafts --disableFastRender
   installer:
     desc: Copy installer from root to site/static directory
     cmds:

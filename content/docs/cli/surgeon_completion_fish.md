@@ -1,5 +1,5 @@
 ---
-date: 2025-03-24T19:05:46Z
+date: 2025-03-24T23:55:03Z
 title: "surgeon completion fish"
 slug: surgeon_completion_fish
 url: /docs/cli/surgeon_completion_fish/

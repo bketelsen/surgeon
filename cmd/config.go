@@ -21,7 +21,9 @@ THE SOFTWARE.
 */
 package cmd
 
-import "github.com/spf13/viper"
+import (
+	"github.com/spf13/viper"
+)
 
 type Config struct {
 	Upstream   string
@@ -41,7 +43,11 @@ type CodeMod struct {
 	Args        []string
 }
 
-func ReadConfig() (Config, error) {
+func ReadConfig(path string) (Config, error) {
+
+	viper.SetConfigFile(path)
+	viper.SetConfigType("yaml")
+	viper.ReadInConfig()
 	var c Config
 	err := viper.Unmarshal(&c)
 	return c, err

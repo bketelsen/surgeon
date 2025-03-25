@@ -5,7 +5,7 @@
 version: '3'
 
 vars:
-  VERSION: 0.2.2
+  VERSION: 0.2.3
 
 includes:
   docs:
@@ -22,15 +22,25 @@ includes:
     optional: true
 
 tasks:
+
+
+  setup:
+    desc: Install dependencies
+    cmds:
+      - go mod tidy
+
   build:
     desc: Build the application
     summary: |
       Build the application with ldflags to set the version with a -dev suffix.
 
       Output: 'surgeon' in project root.
+        sources:
+      - ./**/*.go
+    generates:
+      - ./surgeon
     cmds:
-      - go build -o surgeon -ldflags '-s -w -X github.com/bketelsen/surgeon/cmd.version={{.VERSION}}-dev' main.go
-    silent: true
+      - go build
 
   tools:
     desc: Install required tools

@@ -95,7 +95,7 @@ and have a cumulative effect.  Be sure to verify your modifications before commi
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		c, err := ReadConfig()
+		c, err := ReadConfig(cmd.GlobalConfig().ConfigFileUsed())
 		if err != nil {
 			cmd.Logger.Error("Reading config", tint.Err(err))
 			return

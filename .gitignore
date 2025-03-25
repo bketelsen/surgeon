@@ -1,5 +1,5 @@
 surgeon
 dist/
 .envrc
-docs/public
-docs/.hugo_build.lock
+public/
+.hugo_build.lock
