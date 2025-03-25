@@ -20,7 +20,6 @@ require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.6 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
 	github.com/go-viper/mapstructure/v2 v2.2.1 // indirect
-	github.com/imfing/hextra v0.9.6 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect

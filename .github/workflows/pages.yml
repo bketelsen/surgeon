@@ -60,6 +60,7 @@ jobs:
         run: |
           hugo \
             --gc --minify \
+            --config ./site/hugo.yaml \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
