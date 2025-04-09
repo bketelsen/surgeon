@@ -7,24 +7,25 @@ before:
   hooks:
     # You may remove this if you don't use go modules.
     - go mod tidy
-after:
-  hooks:
-    - go run main.go gendocs
+    - ./scripts/completions.sh
+    - ./scripts/manpages.sh
+
 builds:
   - env:
       - CGO_ENABLED=0
+      - NOCOLOR=1
     goos:
       - linux
     goarch:
       - amd64
       - arm64
-    binary: surgeon 
-    id: surgeon 
+    binary: surgeon
+    id: surgeon
+    main: ./cmd/surgeon
     # Default: '-s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser'.
     # Templates: allowed.
     ldflags:
-      - '-s -w -X github.com/bketelsen/surgeon/cmd.date={{ .CommitDate }} -X github.com/bketelsen/surgeon/cmd.treeState={{ .IsGitDirty }} -X github.com/bketelsen/surgeon/cmd.version={{.Version}} -X github.com/bketelsen/surgeon/cmd.commit={{.Commit}} -X github.com/bketelsen/surgeon/cmd.builtBy=goreleaser'
-
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{ .CommitDate }} -X main.builtBy=goreleaser
 archives:
   - formats: [ 'tar.gz' ]
     # this name template makes the OS and Arch compatible with the results of `uname`.
@@ -39,34 +40,16 @@ archives:
     format_overrides:
       - goos: windows
         formats: [ 'zip' ]
+    files:
+      - src: "manpages/*"
+        strip_parent: true
 
 changelog:
   sort: asc
-  use: github
   filters:
     exclude:
+      - "^docs:"
       - "^test:"
-      - "^chore"
-      - "merge conflict"
-      - Merge pull request
-      - Merge remote-tracking branch
-      - Merge branch
-      - go mod tidy
-  groups:
-    - title: Dependency updates
-      regexp: "^.*feat\\(deps\\)*:+.*$"
-      order: 300
-    - title: "New Features"
-      regexp: "^.*feat[(\\w)]*:+.*$"
-      order: 100
-    - title: "Bug fixes"
-      regexp: "^.*fix[(\\w)]*:+.*$"
-      order: 200
-    - title: "Documentation updates"
-      regexp: "^.*docs[(\\w)]*:+.*$"
-      order: 400
-    - title: Other work
-      order: 9999
 
 release:
   footer: >-
@@ -74,3 +57,20 @@ release:
     ---
 
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
+
+announce:
+  bluesky:
+    # Whether it's enabled or not.
+    #
+    # Templates: allowed (since v2.6).
+    enabled: false
+
+    # Message template to use while publishing.
+    #
+    # Default: '{{ .ProjectName }} {{ .Tag }} is out! Check it out at {{ .ReleaseURL }}'.
+    # Templates: allowed.
+    message_template: "Fresh bits hot off the pipeline!\n\n{{ .ProjectName }} {{ .Tag }} is out! Check it out at {{ .ReleaseURL }}\n\nUse {{ .ProjectName }} to track your deployed containers and virtual machines."
+
+    # The username of the account that will post
+    # to Bluesky
+    username: "brian.dev"

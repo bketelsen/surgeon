@@ -1,8 +1,5 @@
 upstream: https://some.repository.com/upstream/repo
 verbose: true
-stage: true
-commit: true
-push: false
 modsdir: mymods
 codemods:
 - description: Modify URLS
