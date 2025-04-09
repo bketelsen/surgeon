@@ -1,4 +1,4 @@
-# Surgeon :knife:
+# Surgeon
 
 Modify your fork of an upstream repository with surgical precision.
 

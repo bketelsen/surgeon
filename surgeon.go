@@ -19,6 +19,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+
+// Package surgeon is a tool for modifying Go code
+// using code mods. It allows you to define a set of code modifications
+// and apply them to a Go project. The code mods are defined in a configuration
+// file and can be applied to the source code using the surgeon tool.
 package surgeon
 
 type Config struct {

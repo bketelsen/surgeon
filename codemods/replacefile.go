@@ -1,6 +1,7 @@
 package codemods
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -17,7 +18,6 @@ type ReplaceFile struct{}
 var _ CodeMod = ReplaceFile{}
 
 func (s ReplaceFile) Apply(source, target, match string, args ...string) error {
-
 	slog.Info("Applying replacefile", "source", source, "target", target, "match", match, "args", args)
 
 	sourceMatches := filepath.Join(source, match)
@@ -35,9 +35,10 @@ func (s ReplaceFile) Apply(source, target, match string, args ...string) error {
 
 	return nil
 }
-func (s ReplaceFile) Validate(source, target, match string, args ...string) error {
+
+func (s ReplaceFile) Validate(_, _, _ string, args ...string) error {
 	if len(args) != 1 {
-		return fmt.Errorf("replacefile requires two arguments")
+		return errors.New("replacefile requires two arguments")
 	}
 	return nil
 }
@@ -65,13 +66,13 @@ Example:
 	`
 }
 
-func replace(new, filePath string) error {
-	slog.Debug("Replacing", "file", filePath, "with", new)
-	bb, err := os.ReadFile(new)
+func replace(newfile, oldfile string) error {
+	slog.Debug("Replacing", "file", oldfile, "with", newfile)
+	bb, err := os.ReadFile(newfile)
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile(filePath, bb, 0644)
+	err = os.WriteFile(oldfile, bb, 0o644)
 	if err != nil {
 		return err
 	}

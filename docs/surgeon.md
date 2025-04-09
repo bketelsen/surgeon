@@ -1,8 +1,8 @@
-## surgeon
+# surgeon
 
 Surgically modify your forks
 
-### Synopsis
+## Synopsis
 
 Surgeon is a tool to make surgical changes to forks of upstream repositories.
 
@@ -24,7 +24,7 @@ and have a cumulative effect.  Be sure to verify your modifications before commi
 surgeon [flags]
 ```
 
-### Options
+## Options
 
 ```
   -c, --config-file string    (default "/var/home/bjk/projects/surgeon/.surgeon.yaml")
@@ -32,7 +32,7 @@ surgeon [flags]
       --log-level log        logging level [debug|info|warn|error] (default info)
 ```
 
-### SEE ALSO
+## See also
 
 * [surgeon codemod](surgeon_codemod.md)	 - Work with codemods
 * [surgeon completion](surgeon_completion.md)	 - Generate the autocompletion script for the specified shell

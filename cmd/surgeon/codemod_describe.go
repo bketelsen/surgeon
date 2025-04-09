@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func NewCodemodDescribeCmd(config *viper.Viper) *cobra.Command {
+func NewCodemodDescribeCmd(_ *viper.Viper) *cobra.Command {
 	// Define our command
 	describeCmd := &cobra.Command{
 		Use:   "describe <codemod>",
@@ -25,7 +25,6 @@ Show the usage and arguments for a codemod.`,
 				return
 			}
 			cmd.Println(cm.Usage())
-
 		},
 	}
 

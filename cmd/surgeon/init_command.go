@@ -31,7 +31,7 @@ import (
 	yaml "gopkg.in/yaml.v3"
 )
 
-func NewInitCommand(config *viper.Viper) *cobra.Command {
+func NewInitCommand(_ *viper.Viper) *cobra.Command {
 	initCmd := &cobra.Command{
 		Use:   "init",
 		Short: "Initialize a new surgical fork",
@@ -44,7 +44,7 @@ Example configuration file:
 	upstream: https://github.com/community-scripts/ProxmoxVE
 	modsdir: mymods
 `,
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(_ *cobra.Command, _ []string) {
 			config := surgeon.Config{
 				Upstream: "https://some.repository.com/upstream/repo",
 				ModsDir:  "mymods",
@@ -67,7 +67,7 @@ Example configuration file:
 				slog.Error("Marshal config", "error", err)
 				return
 			}
-			err = os.WriteFile(".surgeon.yaml", bb, 0644)
+			err = os.WriteFile(".surgeon.yaml", bb, 0o644)
 			if err != nil {
 				slog.Error("Writing config", "error", err)
 				return

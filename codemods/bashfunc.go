@@ -1,6 +1,7 @@
 package codemods
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -20,7 +21,6 @@ type BashFunc struct{}
 var _ CodeMod = BashFunc{}
 
 func (s BashFunc) Apply(source, target, match string, args ...string) error {
-
 	slog.Info("Applying bash function replacer", "source", source, "target", target, "match", match, "args", args)
 	sourceMatches := filepath.Join(source, match)
 	matches, err := filepath.Glob(sourceMatches)
@@ -37,12 +37,14 @@ func (s BashFunc) Apply(source, target, match string, args ...string) error {
 
 	return nil
 }
-func (s BashFunc) Validate(source, target, match string, args ...string) error {
+
+func (s BashFunc) Validate(_, _, _ string, args ...string) error {
 	if len(args) != 2 {
-		return fmt.Errorf("bashfunc requires two arguments")
+		return errors.New("bashfunc requires two arguments")
 	}
 	return nil
 }
+
 func (s BashFunc) Description() string {
 	return "Replace a bash function with another"
 }
@@ -140,17 +142,16 @@ func replaceFunction(name, replacementPath, filePath string) error {
 		}
 		defer nf.Close()
 		for _, line := range before {
-			nf.WriteString(line + "\n")
+			_, _ = nf.WriteString(line + "\n")
 		}
 		// write the replacement
 		syntax.NewPrinter().Print(nf, replace)
-		nf.WriteString("\n")
+		_, _ = nf.WriteString("\n")
 		// write the after part
 		for _, line := range after {
-			nf.WriteString(line + "\n")
+			_, _ = nf.WriteString(line + "\n")
 		}
 		nf.Close()
-
 	}
 	return nil
 }
