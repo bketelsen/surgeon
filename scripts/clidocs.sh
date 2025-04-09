@@ -10,7 +10,7 @@ wholething="# surgeon <small>$NEXT</small>"
 # update this directory to the default value
 # of the `--output` flag on the doc generation command
 # and at the end of the script too 
-rm -rf www/docs/cmd/*.md
+rm -rf ./docs/surgeon*.md
 go run ./cmd/surgeon gendocs
 "$SED" \
 	-i'' \
