@@ -1,6 +1,7 @@
 package codemods
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -19,7 +20,6 @@ type SJSON struct{}
 var _ CodeMod = SJSON{}
 
 func (s SJSON) Apply(source, target, match string, args ...string) error {
-
 	slog.Info("Applying sjson", "source", source, "target", target, "match", match, "args", args)
 
 	sourceMatches := filepath.Join(source, match)
@@ -40,18 +40,18 @@ func (s SJSON) Apply(source, target, match string, args ...string) error {
 			return fmt.Errorf("modifying json: %w", err)
 		}
 
-		err = os.WriteFile(m, []byte(output), 0644)
+		err = os.WriteFile(m, []byte(output), 0o644)
 		if err != nil {
 			return fmt.Errorf("writing file: %w", err)
 		}
-
 	}
 
 	return nil
 }
-func (s SJSON) Validate(source, target, match string, args ...string) error {
+
+func (s SJSON) Validate(_, _, _ string, args ...string) error {
 	if len(args) < 2 {
-		return fmt.Errorf("sjson requires at least two arguments")
+		return errors.New("sjson requires at least two arguments")
 	}
 	return nil
 }
@@ -84,7 +84,6 @@ Example:
 }
 
 func apply(action, key, value, filePath string) (string, error) {
-
 	bb, err := os.ReadFile(filePath)
 	if err != nil {
 		return "", err
@@ -98,7 +97,6 @@ func apply(action, key, value, filePath string) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		//fmt.Println("Output", output)
 
 	case "del":
 		// add newline
@@ -110,7 +108,6 @@ func apply(action, key, value, filePath string) (string, error) {
 
 	default:
 		return "", fmt.Errorf("unknown action %q", action)
-
 	}
 
 	return output, nil

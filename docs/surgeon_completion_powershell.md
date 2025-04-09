@@ -1,8 +1,8 @@
-## surgeon completion powershell
+# surgeon completion powershell
 
 Generate the autocompletion script for powershell
 
-### Synopsis
+## Synopsis
 
 Generate the autocompletion script for powershell.
 
@@ -18,21 +18,21 @@ to your powershell profile.
 surgeon completion powershell [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help              help for powershell
       --no-descriptions   disable completion descriptions
 ```
 
-### Options inherited from parent commands
+## Options inherited from parent commands
 
 ```
   -c, --config-file string    (default "/var/home/bjk/projects/surgeon/.surgeon.yaml")
       --log-level log        logging level [debug|info|warn|error] (default info)
 ```
 
-### SEE ALSO
+## See also
 
 * [surgeon completion](surgeon_completion.md)	 - Generate the autocompletion script for the specified shell
 

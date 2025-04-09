@@ -108,8 +108,7 @@ and have a cumulative effect.  Be sure to verify your modifications before commi
 
 			return nil
 		},
-		RunE: func(cmd *cobra.Command, args []string) error {
-
+		RunE: func(cmd *cobra.Command, _ []string) error {
 			c, err := ReadConfig(config.GetString("config-file"))
 			if err != nil {
 				ui.Error("Specified config file not found", config.GetString("config-file"))

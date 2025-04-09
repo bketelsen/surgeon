@@ -91,12 +91,12 @@ func generateCodeModDocs(path string) error {
 			return err
 		}
 		defer f.Close()
-		f.WriteString("# " + name + " CodeMod\n\n")
-		f.WriteString(mod.Description() + "\n")
-		f.WriteString("\n## Usage\n\n")
-		f.WriteString("```\n")
-		f.WriteString(mod.Usage() + "\n")
-		f.WriteString("```\n")
+		_, _ = f.WriteString("# " + name + " CodeMod\n\n")
+		_, _ = f.WriteString(mod.Description() + "\n")
+		_, _ = f.WriteString("\n## Usage\n\n")
+		_, _ = f.WriteString("```\n")
+		_, _ = f.WriteString(mod.Usage() + "\n")
+		_, _ = f.WriteString("```\n")
 		slog.Debug("Generated code mod docs", "name", name)
 	}
 	return nil

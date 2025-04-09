@@ -31,7 +31,6 @@ func NewPatient(config surgeon.Config) *Patient {
 }
 
 func (p *Patient) Operate() error {
-
 	slog.Debug("Opening fork git repository", "path", p.ForkRoot)
 	r, err := git.PlainOpen(p.ForkRoot)
 	if err != nil {
@@ -82,7 +81,6 @@ func (p *Patient) Operate() error {
 			slog.Error("applying code mod", "error", err)
 			return fmt.Errorf("applying code mod: %w", err)
 		}
-
 	}
 
 	slog.Info("Comparing directories")
@@ -107,7 +105,6 @@ func (p *Patient) Operate() error {
 				}
 			}
 		}
-
 	}
 
 	// get the changed files in the upstream repository
@@ -122,7 +119,7 @@ func (p *Patient) Operate() error {
 		slog.Error("getting worktree status", "error", err)
 		return err
 	}
-	//fmt.Println(status)
+	// fmt.Println(status)
 	for s := range status {
 		//	fmt.Println(s)
 		// copy the file from the upstream repository to the fork
@@ -140,7 +137,6 @@ func (p *Patient) Operate() error {
 }
 
 func (p *Patient) sanityCheck() error {
-
 	ok, err := p.isClean()
 	if err != nil {
 		return fmt.Errorf("error checking if %s is in clean status: %w", p.ForkRoot, err)
@@ -206,7 +202,7 @@ func copyFile(path, source, target string) error {
 	sourcePath := filepath.Join(source, path)
 	targetPath := filepath.Join(target, path)
 	slog.Debug("Copying file", "source", sourcePath, "target", targetPath)
-	err := os.MkdirAll(filepath.Dir(targetPath), 0755)
+	err := os.MkdirAll(filepath.Dir(targetPath), 0o755)
 	if err != nil {
 		return fmt.Errorf("creating directory: %w", err)
 	}
@@ -225,7 +221,6 @@ func copyFile(path, source, target string) error {
 		return fmt.Errorf("copying file: %w", err)
 	}
 	return nil
-
 }
 
 // compareDirs returns a list of files that are missing from the target directory
@@ -255,7 +250,6 @@ func compareDirs(source, target string) ([]string, error) {
 				if !fi.IsDir() {
 					missing = append(missing, rel)
 				}
-
 			}
 		}
 		return nil

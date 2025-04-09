@@ -1,13 +1,12 @@
-![logo](_media/icon.svg)
+![logo](_media/surgeon.png)
 
 
-# surgeon <small>4.13.1</small>
+# surgeon <small>v0.2.6</small>
 
-> A magical documentation site generator.
+> Modify your fork of an upstream repository with surgical precision.
 
 - Simple and lightweight
-- No statically built html files
-- Multiple themes
+- Make precise changes without losing upstream code
 
 [GitHub](https://github.com/bketelsen/surgeon/)
 [Getting Started](readme)

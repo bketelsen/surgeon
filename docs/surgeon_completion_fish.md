@@ -1,8 +1,8 @@
-## surgeon completion fish
+# surgeon completion fish
 
 Generate the autocompletion script for fish
 
-### Synopsis
+## Synopsis
 
 Generate the autocompletion script for the fish shell.
 
@@ -21,21 +21,21 @@ You will need to start a new shell for this setup to take effect.
 surgeon completion fish [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help              help for fish
       --no-descriptions   disable completion descriptions
 ```
 
-### Options inherited from parent commands
+## Options inherited from parent commands
 
 ```
   -c, --config-file string    (default "/var/home/bjk/projects/surgeon/.surgeon.yaml")
       --log-level log        logging level [debug|info|warn|error] (default info)
 ```
 
-### SEE ALSO
+## See also
 
 * [surgeon completion](surgeon_completion.md)	 - Generate the autocompletion script for the specified shell
 

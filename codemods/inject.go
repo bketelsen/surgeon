@@ -1,7 +1,11 @@
+// Package codemods provides a set of code modifications (codemods) for
+// modifying files. It allows you to define a set of code modifications
+// and apply them to a directory.
 package codemods
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -38,9 +42,10 @@ func (s Inject) Apply(source, target, match string, args ...string) error {
 
 	return nil
 }
-func (s Inject) Validate(source, target, match string, args ...string) error {
+
+func (s Inject) Validate(_, _, _ string, args ...string) error {
 	if len(args) != 2 {
-		return fmt.Errorf("inject requires two arguments")
+		return errors.New("inject requires two arguments")
 	}
 	return nil
 }
@@ -79,7 +84,7 @@ func inject(where, contents, filePath string) error {
 	switch where {
 	case "start":
 		// add newline
-		contents = contents + "\n"
+		contents += "\n"
 		bb = append([]byte(contents), bb...)
 	case "end":
 		// add newline
@@ -93,7 +98,7 @@ func inject(where, contents, filePath string) error {
 		strcontent := string(bb)
 		lines := strings.Split(strcontent, "\n")
 		if line > len(lines) {
-			return fmt.Errorf("line number out of range")
+			return errors.New("line number out of range")
 		}
 		var buf bytes.Buffer
 		for i, l := range lines {
@@ -104,10 +109,9 @@ func inject(where, contents, filePath string) error {
 			buf.WriteString("\n")
 		}
 		bb = buf.Bytes()
-
 	}
 
-	err = os.WriteFile(filePath, bb, 0644)
+	err = os.WriteFile(filePath, bb, 0o644)
 	if err != nil {
 		return err
 	}

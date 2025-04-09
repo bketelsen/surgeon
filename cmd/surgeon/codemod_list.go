@@ -11,13 +11,13 @@ import (
 	"github.com/bketelsen/toolbox/ui"
 )
 
-func NewCodemodListCmd(config *viper.Viper) *cobra.Command {
+func NewCodemodListCmd(_ *viper.Viper) *cobra.Command {
 	// Define our command
 	listCmd := &cobra.Command{
 		Use:   "list",
 		Short: "List available codemods",
 		Long:  `List all available codemods.`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, _ []string) {
 			var list []List
 			// Iterate over the mods and add them to the list
 			for name, mod := range codemods.Mods {
@@ -30,7 +30,6 @@ func NewCodemodListCmd(config *viper.Viper) *cobra.Command {
 			out, err := ui.DisplayTable(list, "", nil)
 			cobra.CheckErr(err)
 			cmd.Println(out)
-
 		},
 	}
 

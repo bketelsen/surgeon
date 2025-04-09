@@ -1,6 +1,7 @@
 package codemods
 
 import (
+	"errors"
 	"fmt"
 	"log/slog"
 	"os"
@@ -18,7 +19,6 @@ type Sed struct{}
 var _ CodeMod = Sed{}
 
 func (s Sed) Apply(source, target, match string, args ...string) error {
-
 	slog.Info("Applying sed", "source", source, "target", target, "match", match, "args", args)
 
 	sourceMatches := filepath.Join(source, match)
@@ -35,9 +35,10 @@ func (s Sed) Apply(source, target, match string, args ...string) error {
 
 	return nil
 }
-func (s Sed) Validate(source, target, match string, args ...string) error {
+
+func (s Sed) Validate(_, _, _ string, args ...string) error {
 	if len(args) != 2 {
-		return fmt.Errorf("sed requires two arguments")
+		return errors.New("sed requires two arguments")
 	}
 	return nil
 }
@@ -68,7 +69,7 @@ Example:
 	`
 }
 
-func sed(old, new, filePath string) error {
+func sed(old, newthing, filePath string) error {
 	fileData, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
@@ -79,7 +80,7 @@ func sed(old, new, filePath string) error {
 	}
 
 	fileString := string(fileData)
-	fileString = strings.ReplaceAll(fileString, old, new)
+	fileString = strings.ReplaceAll(fileString, old, newthing)
 	fileData = []byte(fileString)
 
 	err = os.WriteFile(filePath, fileData, fi.Mode())

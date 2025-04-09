@@ -1,8 +1,8 @@
-## surgeon codemod list
+# surgeon codemod list
 
 List available codemods
 
-### Synopsis
+## Synopsis
 
 List all available codemods.
 
@@ -10,20 +10,20 @@ List all available codemods.
 surgeon codemod list [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help   help for list
 ```
 
-### Options inherited from parent commands
+## Options inherited from parent commands
 
 ```
   -c, --config-file string    (default "/var/home/bjk/projects/surgeon/.surgeon.yaml")
       --log-level log        logging level [debug|info|warn|error] (default info)
 ```
 
-### SEE ALSO
+## See also
 
 * [surgeon codemod](surgeon_codemod.md)	 - Work with codemods
 

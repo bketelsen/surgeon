@@ -1,8 +1,8 @@
-## surgeon completion zsh
+# surgeon completion zsh
 
 Generate the autocompletion script for zsh
 
-### Synopsis
+## Synopsis
 
 Generate the autocompletion script for the zsh shell.
 
@@ -17,11 +17,11 @@ To load completions in your current shell session:
 
 To load completions for every new session, execute once:
 
-#### Linux:
+### Linux:
 
 	surgeon completion zsh > "${fpath[1]}/_surgeon"
 
-#### macOS:
+### macOS:
 
 	surgeon completion zsh > $(brew --prefix)/share/zsh/site-functions/_surgeon
 
@@ -32,21 +32,21 @@ You will need to start a new shell for this setup to take effect.
 surgeon completion zsh [flags]
 ```
 
-### Options
+## Options
 
 ```
   -h, --help              help for zsh
       --no-descriptions   disable completion descriptions
 ```
 
-### Options inherited from parent commands
+## Options inherited from parent commands
 
 ```
   -c, --config-file string    (default "/var/home/bjk/projects/surgeon/.surgeon.yaml")
       --log-level log        logging level [debug|info|warn|error] (default info)
 ```
 
-### SEE ALSO
+## See also
 
 * [surgeon completion](surgeon_completion.md)	 - Generate the autocompletion script for the specified shell
 
