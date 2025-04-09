@@ -1,62 +1,123 @@
 # https://taskfile.dev
-# Generated File, changes may be lost
-# Add `Taskfile.custom.yml` in this directory with your additions
 
-version: '3'
+version: "3"
 
-vars:
-  VERSION: 0.2.5
-
-includes:
-  docs:
-    taskfile: Taskfile.docs.yml
-    optional: true
-  checks:
-    taskfile: Taskfile.checks.yml
-    optional: true
-  release:
-    taskfile: Taskfile.release.yml
-    optional: true
-  custom:
-    taskfile: Taskfile.custom.yml
-    optional: true
+env:
+  GO111MODULE: on
+  GOPROXY: https://proxy.golang.org,direct
 
 tasks:
-
+  dev:
+    desc: Setup git hooks
+    cmds:
+      - cp -f scripts/pre-commit.sh .git/hooks/pre-commit
 
   setup:
     desc: Install dependencies
     cmds:
       - go mod tidy
 
-  build:
-    desc: Build the application
-    summary: |
-      Build the application with ldflags to set the version with a -dev suffix.
+  docker:setup:
+    desc: Setup Docker for multi-arch image builds
+    cmds:
+      - docker run --privileged --rm tonistiigi/binfmt --install all
 
-      Output: 'surgeon' in project root.
-        sources:
+  build:
+    desc: Build the binary
+    sources:
       - ./**/*.go
     generates:
       - ./surgeon
     cmds:
-      - go build
+      - go build ./cmd/surgeon
 
-  tools:
-    desc: Install required tools
+  install:
+    desc: Install the binary locally
+    sources:
+      - ./**/*.go
+      - ./**/*.tpl
     cmds:
-      - go install github.com/bketelsen/toolbox/toolgen@latest
+      - go install ./cmd/surgeon
 
-  direnv:
-    desc: Add direnv hook to your bashrc
+  test:
+    desc: Run tests
+    env:
+      LC_ALL: C
+    vars:
+      TEST_OPTIONS: '{{default "" .TEST_OPTIONS}}'
+      SOURCE_FILES: '{{default "./..." .SOURCE_FILES}}'
+      TEST_PATTERN: '{{default "." .TEST_PATTERN}}'
     cmds:
-      - direnv hook bash >> ~/.bashrc
+      - go test {{.TEST_OPTIONS}} -failfast -race -coverpkg=./... -covermode=atomic -coverprofile=coverage.txt {{.SOURCE_FILES}} -run {{.TEST_PATTERN}} -timeout=15m
+
+  cover:
+    desc: Open the cover tool
+    cmds:
+      - go tool cover -html=coverage.txt
+
+  fmt:
+    desc: gofumpt all code
+    cmds:
+      - gofumpt -w -l .
+
+  lint:
+    desc: Lint the code with golangci-lint
+    cmds:
+      - golangci-lint run --config ./.golangci.yaml ./...
+
+  ci:
+    desc: Run all CI steps
+    cmds:
+      - task: setup
+      - task: build
+      - task: test
+
+  default:
+    desc: Runs the default tasks
+    cmds:
+      - task: ci
+
+  commit:
+    desc: Commit changes
+    deps:
+      - build
+      - fmt
+      - lint
+    preconditions:
+      - sh: '[ -x "$(command -v gum)" ]'
+        msg: gum is not installed, see https://github.com/charmbracelet/gum
+    cmds:
+      - ./scripts/commit.sh
+
+  release-check:
+    desc: Run goreleaser check
+    cmds:
+      - goreleaser check
     silent: true
-
-  generate:
-    desc: Generate CLI documentation
-    deps: [tools]
+    
+  release:
+    desc: Create a new tag
+    vars:
+      NEXT:
+        sh: go tool svu n
+    prompt: "This will release {{.NEXT}}. Continue?"
+    preconditions:
+      - sh: '[ $(git symbolic-ref --short HEAD) = "main" ]'
+        msg: Not on main branch
+      - sh: "[ $(git status --porcelain=2 | wc -l) = 0 ]"
+        msg: "Git is dirty"
     cmds:
-      - go run main.go gendocs -b "/surgeon"
-    silent: true
+      - git tag {{.NEXT}}
+      - echo {{.NEXT}}
+      - git push origin --tags
+      - GOPROXY=proxy.golang.org go list -m github.com/bketelsen/surgeon@v{{.VERSION}}
 
+  goreleaser:
+    desc: Run GoReleaser either in snapshot or release mode
+    deps:
+      - build
+    vars:
+      SNAPSHOT:
+        sh: 'if [[ $GITHUB_REF != refs/tags/v* ]]; then echo "--snapshot"; fi'
+    cmds:
+      - goreleaser release --clean --timeout 60m {{.SNAPSHOT}}
