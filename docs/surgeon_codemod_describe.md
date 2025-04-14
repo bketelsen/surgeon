@@ -20,7 +20,7 @@ surgeon codemod describe <codemod> [flags]
 ## Options inherited from parent commands
 
 ```
-  -c, --config-file string    (default "/var/home/bjk/projects/surgeon/.surgeon.yaml")
+  -c, --config-file string    (default "/home/runner/work/surgeon/surgeon/.surgeon.yaml")
       --log-level log        logging level [debug|info|warn|error] (default info)
 ```
 
