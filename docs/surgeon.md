@@ -27,7 +27,7 @@ surgeon [flags]
 ## Options
 
 ```
-  -c, --config-file string    (default "/var/home/bjk/projects/surgeon/.surgeon.yaml")
+  -c, --config-file string    (default "/home/runner/work/surgeon/surgeon/.surgeon.yaml")
   -h, --help                 help for surgeon
       --log-level log        logging level [debug|info|warn|error] (default info)
 ```
