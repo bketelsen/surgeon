@@ -34,7 +34,7 @@ func (s Inject) Apply(source, target, match string, args ...string) error {
 	for _, m := range matches {
 		where := args[0]
 		contents := args[1]
-		err = inject(where, contents, m)
+		err = injectToFile(where, contents, m)
 		if err != nil {
 			return fmt.Errorf("injecting content: %w", err)
 		}
@@ -58,6 +58,8 @@ func (s Inject) Usage() string {
 	return `Inject contents into a file.
 This codemod modifies the matched file(s) by injecting specified content.
 
+Assumes file has newlines.
+
 Args (2 required):
 	1. Injection point in the file. Valid: "start", "end", <line number>
 	2. The content to inject
@@ -75,35 +77,35 @@ Example:
 	`
 }
 
-func inject(where, contents, filePath string) error {
-	slog.Debug("Injecting", "contents", contents, "at", where, "in", filePath)
-	bb, err := os.ReadFile(filePath)
-	if err != nil {
-		return err
-	}
+func inject(where, contents string, fileContent []byte) ([]byte, error) {
+	slog.Debug("Injecting", "contents", contents, "at", where)
+	var bb []byte
+
 	switch where {
 	case "start":
 		// add newline
 		contents += "\n"
-		bb = append([]byte(contents), bb...)
+		bb = append([]byte(contents), fileContent...)
 	case "end":
 		// add newline
-		bb = append(bb, []byte("\n")...)
+		bb = append(fileContent, []byte("\n")...)
 		bb = append(bb, []byte(contents)...)
 	default:
 		line, err := strconv.Atoi(where)
 		if err != nil {
-			return fmt.Errorf("invalid line number: %w", err)
+			return nil, fmt.Errorf("invalid line number: %w", err)
 		}
-		strcontent := string(bb)
+		strcontent := string(fileContent)
 		lines := strings.Split(strcontent, "\n")
 		if line > len(lines) {
-			return errors.New("line number out of range")
+			return nil, errors.New("line number out of range")
 		}
 		var buf bytes.Buffer
 		for i, l := range lines {
 			buf.WriteString(l)
-			if i == line {
+			if i == line-1 {
+				buf.WriteString("\n")
+
 				buf.WriteString(contents)
 			}
 			buf.WriteString("\n")
@@ -111,9 +113,24 @@ func inject(where, contents, filePath string) error {
 		bb = buf.Bytes()
 	}
 
-	err = os.WriteFile(filePath, bb, 0o644)
+	return bb, nil
+}
+
+func injectToFile(where, contents, filePath string) error {
+	bb, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
 	}
+
+	modifiedContent, err := inject(where, contents, bb)
+	if err != nil {
+		return err
+	}
+
+	err = os.WriteFile(filePath, modifiedContent, 0o644)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

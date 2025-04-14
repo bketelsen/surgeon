@@ -83,13 +83,10 @@ Example:
 	`
 }
 
-func apply(action, key, value, filePath string) (string, error) {
-	bb, err := os.ReadFile(filePath)
-	if err != nil {
-		return "", err
-	}
-	content := string(bb)
+func modifyJSON(action, key, value, content string) (string, error) {
 	var output string
+	var err error
+
 	switch action {
 	case "set":
 		slog.Debug("Setting", "key", key, "to", value)
@@ -99,7 +96,6 @@ func apply(action, key, value, filePath string) (string, error) {
 		}
 
 	case "del":
-		// add newline
 		slog.Debug("Deleting", "key", key)
 		output, err = sjson.Delete(content, key)
 		if err != nil {
@@ -108,6 +104,23 @@ func apply(action, key, value, filePath string) (string, error) {
 
 	default:
 		return "", fmt.Errorf("unknown action %q", action)
+	}
+
+	return output, nil
+}
+
+func apply(action, key, value, filePath string) (string, error) {
+	// Read the file content
+	bb, err := os.ReadFile(filePath)
+	if err != nil {
+		return "", err
+	}
+
+	// Modify the JSON content
+	content := string(bb)
+	output, err := modifyJSON(action, key, value, content)
+	if err != nil {
+		return "", err
 	}
 
 	return output, nil
