@@ -22,4 +22,5 @@
   - [surgeon codemod describe](surgeon_codemod_describe.md)
   - [surgeon completion](surgeon_completion.md)
 
+- [Change Log](changelog.md)
 

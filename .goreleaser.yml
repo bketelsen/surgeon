@@ -2,7 +2,7 @@
 # vim: set ts=2 sw=2 tw=0 fo=cnqoj
 
 version: 2
-project_name: surgeon 
+project_name: surgeon
 before:
   hooks:
     # You may remove this if you don't use go modules.
@@ -16,6 +16,7 @@ builds:
       - NOCOLOR=1
     goos:
       - linux
+      - darwin
     goarch:
       - amd64
       - arm64
@@ -46,10 +47,40 @@ archives:
 
 changelog:
   sort: asc
+  use: github
+  format: "{{ .SHA }}: {{ .Message }}{{ with .AuthorUsername }} (@{{ . }}){{ end }}"
   filters:
     exclude:
-      - "^docs:"
       - "^test:"
+      - "^test\\("
+      - "^chore: update$"
+      - "^chore: docs$"
+      - "^docs: update$"
+      - "^chore: typo$"
+      - "^chore: auto-update generated files$"
+      - "^chore\\(deps\\): "
+      - "^(build|ci): "
+      - "merge conflict"
+      - "merge conflict"
+      - Merge pull request
+      - Merge remote-tracking branch
+      - Merge branch
+      - go mod tidy
+  groups:
+    - title: "New Features"
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 100
+    - title: "Security updates"
+      regexp: '^.*?sec(\(.+\))??!?:.+$'
+      order: 150
+    - title: "Bug fixes"
+      regexp: '^.*?(fix|refactor)(\(.+\))??!?:.+$'
+      order: 200
+    - title: "Documentation updates"
+      regexp: ^.*?docs?(\(.+\))??!?:.+$
+      order: 400
+    - title: Other work
+      order: 9999
 
 release:
   footer: >-
@@ -57,6 +88,18 @@ release:
     ---
 
     Released by [GoReleaser](https://github.com/goreleaser/goreleaser).
+nfpms:
+  - file_name_template: "{{ .ProjectName }}_{{ .Arch }}"
+    homepage: https://github.com/bketelsen/surgeon
+    description: Modify your fork of an upstream repository with surgical precision.
+    maintainer: Brian Ketelsen <bketelsen@gmail.com>
+    license: MIT
+    vendor: Brian Ketelsen
+    formats:
+      - deb
+      - rpm
+      - apk
+      - archlinux
 
 announce:
   bluesky:

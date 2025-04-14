@@ -43,6 +43,7 @@ func main() {
 	cmd.AddCommand(NewCodemodCmd(config))
 	cmd.AddCommand(NewManCommand(config))
 	cmd.AddCommand(NewGendocsCommand(config))
+	cmd.AddCommand(NewChangelogCommand(config))
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
 	}
