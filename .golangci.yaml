@@ -9,7 +9,6 @@ linters:
     - forbidigo
     - gocritic
     - misspell
-    - noctx
     - nolintlint
     - perfsprint
     - revive

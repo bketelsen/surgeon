@@ -10,8 +10,6 @@
 #
 # alias gcm='git commit -m "$(gum input)" -m "$(gum write)"'
 
-./scripts/clidocs.sh
-
 if [ -z "$(git status -s -uno | grep -v '^ ' | awk '{print $2}')" ]; then
     gum confirm "Stage all?" && git add .
 fi
