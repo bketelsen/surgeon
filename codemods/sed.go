@@ -69,21 +69,30 @@ Example:
 	`
 }
 
+func sedReplace(old, newthing string, fileContent []byte) []byte {
+	fileString := string(fileContent)
+	fileString = strings.ReplaceAll(fileString, old, newthing)
+	return []byte(fileString)
+}
+
 func sed(old, newthing, filePath string) error {
+	// Read the original file content
 	fileData, err := os.ReadFile(filePath)
 	if err != nil {
 		return err
 	}
+
+	// Perform the replacement
+	modifiedData := sedReplace(old, newthing, fileData)
+
+	// Get file permissions
 	fi, err := os.Stat(filePath)
 	if err != nil {
 		return err
 	}
 
-	fileString := string(fileData)
-	fileString = strings.ReplaceAll(fileString, old, newthing)
-	fileData = []byte(fileString)
-
-	err = os.WriteFile(filePath, fileData, fi.Mode())
+	// Write the modified content back to the file
+	err = os.WriteFile(filePath, modifiedData, fi.Mode())
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,7 @@
 package codemods
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -29,7 +30,7 @@ func (s BashFunc) Apply(source, target, match string, args ...string) error {
 	}
 	for _, m := range matches {
 		replacement := filepath.Join(target, args[1])
-		err = replaceFunction(args[0], replacement, m)
+		err = replaceFunctionInFile(args[0], replacement, m)
 		if err != nil {
 			return fmt.Errorf("applying bash function replacer: %w", err)
 		}
@@ -71,87 +72,92 @@ Example:
 	`
 }
 
-func replaceFunction(name, replacementPath, filePath string) error {
-	file, err := os.Open(filePath)
+func replaceFunction(name string, replacementContent, fileContent []byte) ([]byte, error) {
+	f, err := syntax.NewParser().Parse(bytes.NewReader(fileContent), "")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	f, err := syntax.NewParser().Parse(file, "")
-	if err != nil {
-		return err
-	}
-	file.Close()
+
 	var startpos uint
 	var endpos uint
 	var found bool
 	for _, stmt := range f.Stmts {
 		decl, ok := stmt.Cmd.(*syntax.FuncDecl)
-		if ok {
-			if decl.Name.Value == name {
-				startpos = decl.Pos().Line()
-				endpos = decl.End().Line()
-				found = true
-				break
-			}
+		if ok && decl.Name.Value == name {
+			startpos = decl.Pos().Line()
+			endpos = decl.End().Line()
+			found = true
+			break
 		}
 	}
-	if found {
-		// // read the replacement file
-		replacement, err := os.Open(replacementPath)
-		if err != nil {
-			fmt.Println("Error: ", err)
-			return err
-		}
-		defer replacement.Close()
 
-		replace, err := syntax.NewParser().Parse(replacement, "")
-		if err != nil {
-			return err
-		}
-
-		bb, err := os.ReadFile(filePath)
-		if err != nil {
-			fmt.Println("Error: ", err)
-			return err
-		}
-
-		// slice the file into 3 parts
-		// 1. before the function
-		// 2. the function
-		// 3. after the function
-		contents := string(bb)
-		lines := strings.Split(contents, "\n")
-		var before []string
-		var after []string
-
-		for i, line := range lines {
-			if i < int(startpos-1) {
-				before = append(before, line)
-			} else if i >= int(startpos-1) && i < int(endpos) {
-				continue
-			} else {
-				after = append(after, line)
-			}
-		}
-
-		// write the before part
-		nf, err := os.Create(filePath)
-		if err != nil {
-			fmt.Println("Error: ", err)
-			return err
-		}
-		defer nf.Close()
-		for _, line := range before {
-			_, _ = nf.WriteString(line + "\n")
-		}
-		// write the replacement
-		syntax.NewPrinter().Print(nf, replace)
-		_, _ = nf.WriteString("\n")
-		// write the after part
-		for _, line := range after {
-			_, _ = nf.WriteString(line + "\n")
-		}
-		nf.Close()
+	if !found {
+		return nil, fmt.Errorf("function %q not found", name)
 	}
+
+	// Parse the replacement content
+	replace, err := syntax.NewParser().Parse(bytes.NewReader(replacementContent), "")
+	if err != nil {
+		return nil, err
+	}
+
+	// Slice the file content into 3 parts: before, function, and after
+	lines := strings.Split(string(fileContent), "\n")
+	var before []string
+	var after []string
+
+	for i, line := range lines {
+		if i < int(startpos-1) {
+			before = append(before, line)
+		} else if i >= int(startpos-1) && i < int(endpos) {
+			continue
+		} else {
+			after = append(after, line)
+		}
+	}
+
+	// Combine the parts with the replacement
+	var result bytes.Buffer
+	for _, line := range before {
+		result.WriteString(line + "\n")
+		result.WriteString(line)
+	}
+	syntax.NewPrinter().Print(&result, replace)
+	// result.WriteString("\n")
+	for _, line := range after {
+		result.WriteString(line + "\n")
+	}
+	// Remove the last newline character if it exists
+	if result.Len() > 0 && result.Bytes()[result.Len()-1] == '\n' {
+		result.Truncate(result.Len() - 1)
+	}
+	return result.Bytes(), nil
+}
+
+func replaceFunctionInFile(name, replacementPath, filePath string) error {
+	// Read the original file content
+	fileContent, err := os.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	// Read the replacement content
+	replacementContent, err := os.ReadFile(replacementPath)
+	if err != nil {
+		return err
+	}
+
+	// Perform the replacement
+	modifiedContent, err := replaceFunction(name, replacementContent, fileContent)
+	if err != nil {
+		return err
+	}
+
+	// Write the modified content back to the file
+	err = os.WriteFile(filePath, modifiedContent, 0o644)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
