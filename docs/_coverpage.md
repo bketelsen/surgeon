@@ -1,7 +1,7 @@
 ![logo](_media/surgeon.png)
 
 
-# surgeon <small>v0.2.6</small>
+# surgeon <small>v0.2.7</small>
 
 > Modify your fork of an upstream repository with surgical precision.
 
