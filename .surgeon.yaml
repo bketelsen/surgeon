@@ -1,4 +1,4 @@
-upstream: https://some.repository.com/upstream/repo
+upstream: https://my.repository.com/upstream/repo
 verbose: true
 modsdir: mymods
 codemods:
