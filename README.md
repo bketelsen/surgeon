@@ -18,10 +18,10 @@ Codemods implement a small-ish interface so it's easy to add new ones. PR's acce
 
 ``` go
 type CodeMod interface {
-	Apply(source string, target string, match string, args ...string) error
-	Validate(source string, target string, match string, args ...string) error
-	Description() string
-	Usage() string
+  Apply(source string, target string, match string, args ...string) error
+  Validate(source string, target string, match string, args ...string) error
+  Description() string
+  Usage() string
 }
 ```
 
